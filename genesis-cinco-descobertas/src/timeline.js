@@ -68,7 +68,7 @@ L('Porque, no fim das contas, mais importante do que aquilo que você realiza pa
 // ---------- 3. A PALAVRA QUE APARECE DUAS VEZES ----------
 sec(3);
 const B3 = { n: 3, name: 'A palavra que aparece duas vezes' };
-L('Todo mundo conhece a história da arca de Noé.', 'ark', { noah: 1 }, null, B3);
+L('Todo mundo conhece a história da arca de Noé.', 'ark', { board: 1 }, null, B3);
 L('Mas existe um detalhe no texto original que conecta essa história a outra narrativa muito conhecida da Bíblia.', 'ark', { k: 2 });
 L('A palavra hebraica utilizada para descrever a arca de Noé é Tebá.', 'hebrew', {}, R('GÊNESIS 6:14'));
 L('E sabe o que torna isso interessante?', 'hebrew', { k: 2 });

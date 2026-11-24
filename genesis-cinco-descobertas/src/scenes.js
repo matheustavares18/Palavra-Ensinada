@@ -138,6 +138,9 @@ S.enoch = (t, p) => {
   const taken = p.taken ? clamp(t / 4, 0, 1) : 0;
   if (p.taken) s += `<path d="M230 -300 L346 -300 L384 820 L192 820Z" fill="#fff8de" opacity="${f1(.15 + .35 * easeOut(t / 2))}"/>` + glow(288, 640, 220, '#fff6d2', .7 * easeOut(t / 2));
   const x = p.taken ? 288 : 288 + Math.sin(t * .35) * 18;
+  { const ay = 800 - taken * 40 - 110 * 1.25, pulse = .85 + .15 * Math.sin(t * 1.6);
+    s += glow(x, ay, 170 * pulse, '#fff1b8', .9) + rays(x, ay, 14, 210, '#fff6d2', .1, t * .6, .06);
+    for (let i = 0; i < 10; i++) { const a = t * .7 + i * .628, r = 70 + Math.sin(t * 1.3 + i) * 12; s += starShape(x + Math.cos(a) * r * .8, ay + Math.sin(a) * r * 1.2, 3 + (i % 3), '#fffbe0', t, f1(.5 + .4 * Math.sin(t * 2 + i))); } }
   s += person({ who: 'enoque', x, y: 800 - taken * 40, s: 1.25, t, walk: p.taken ? 0 : .9, look: p.taken ? 0 : .2, pose: p.taken ? 'raise' : (p.pose || undefined), op: f1(1 - taken * .85), emo: p.emo || (p.taken ? 'joy' : 'happy') });
   if (p.steps) { for (let i = 0; i < 8; i++) { const k = clamp(t * 1.5 - i * .4, 0, 1); if (k > 0) s += `<g transform="translate(${f1(260 + (i % 2) * 40)},${f1(990 - i * 50)}) scale(.6)" opacity="${f1(k * .8)}">${ICONS.steps()}</g>`; } }
   let ov = '';
@@ -147,18 +150,41 @@ S.enoch = (t, p) => {
 };
 
 S.ark = (t, p) => {
+  if (p.board) return S.arkBoard(t, p);
   const calm = p.calm;
   let s = calm ? sky('ak', [[0, '#7ec4f2'], [1, '#e6f4ff']]) : sky('ak', [[0, '#1f2633'], [1, '#4d5b70']]);
   if (calm) s += glow(460, 160, 220, '#fff3c4', .9) + `<circle cx="460" cy="160" r="44" fill="${gRad('#ffd84d', .3)}"/>` + rays(460, 160, 14, 300, '#fff3c4', .12, t) + clouds(t, 90, 4, 3, '#fff', .9, 6);
   else { s += clouds(t, 30, 7, 5, '#2e3644', .95, 12, 1.5) + clouds(t, 160, 5, 9, '#3b4454', .9, 16, 1.2); for (let i = 0; i < 110; i++) { const x = rnd(i) * 1000 - 200, y = ((rnd(i * 3) * 1100 + t * 620) % 1100) - 100; s += `<line x1="${f1(x)}" y1="${f1(y)}" x2="${f1(x - 6)}" y2="${f1(y + 24)}" stroke="#b8c7da" stroke-width="1.5" opacity=".5"/>`; } }
   if (calm) s += `<path d="M-200 640 Q60 520 200 600 L320 640Z" fill="${gVert('#6b8f5a')}"/>`;
-  s += ark(288, 650, 1.15, t, calm ? .4 : 1.2);
+  s += ark(288, 650, 1.15, t, calm ? .4 : 1.2, { animals: 1, calm });
   if (p.noah) s += `<g transform="translate(288,${f1(650 + Math.sin(t * 1.4) * 4 * (calm ? .4 : 1.2))}) rotate(${f1(Math.sin(t * 1.1) * 2.5 * (calm ? .4 : 1.2))}) scale(1.15)"><clipPath id="nw"><rect x="-26" y="-118" width="46" height="42"/></clipPath><rect x="-26" y="-118" width="46" height="42" fill="#1a0f05"/><g clip-path="url(#nw)">${person({ who: 'noe', x: -3, y: -12, s: .5, t, look: .5, pose: calm ? 'raise' : 'pray', staff: 0, emo: p.emo || (calm ? 'joy' : 'worried') })}</g><rect x="-26" y="-118" width="46" height="42" fill="none" stroke="#4a2e14" stroke-width="3"/></g>`;
   if (calm) s += `<g transform="translate(288,${f1(650 + Math.sin(t * 1.4) * 1.6)}) scale(1.15)"><g transform="translate(-92,-122)"><path d="M0 0 L4 -30 Q8 -40 16 -36" stroke="#d9a54a" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="16" cy="-36" r="2" fill="#222"/></g><g transform="translate(110,-112)"><ellipse cx="0" cy="0" rx="12" ry="9" fill="#8a8a8a"/><path d="M-10 4 Q-16 14 -12 20" stroke="#8a8a8a" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="-4" cy="-2" r="1.4" fill="#222"/></g></g>`;
   s += water(t, 655, calm ? '#3d8fc4' : '#26445e', calm ? '#bfe6ff' : '#8fb0c8', calm ? 5 : 13, calm ? .6 : 1.6);
   if (!calm) for (let i = 0; i < 8; i++) { const x = (rnd(i) * 800 + t * 40) % 800 - 100; s += `<path d="M${f1(x)} ${f1(700 + rnd(i * 3) * 120)} q14 -12 28 0" stroke="#e6f0f8" stroke-width="3" fill="none" opacity=".6"/>`; }
   s += birds(t, calm ? 3 : 0, 4, 230, '#334');
   return { svg: s, shots: [WIDE, { fx: 288, fy: 560, z: 1.5, sy: 450 }, { fx: 285, fy: 520, z: 2.1, sy: 420 }, { fx: 288, fy: 420, z: 1.2, sy: 430 }] };
+};
+
+// Antes do dilúvio: os animais entram na arca, aos pares (Gn 7:8-9)
+S.arkBoard = (t, p) => {
+  let s = sky('ab', [[0, '#8fb8d8'], [1, '#e8eef2']]);
+  s += clouds(t, 60, 5, 4, '#c8d2dc', .9, 6, 1.2) + mountains(560, '#9fb0bf', 3, 110) + haze(560, '#fff', .4);
+  s += hills(600, ['#8cb86a', '#73a456', '#5e8c45'], 3);
+  s += tree(30, 640, .8, t, 'olive', 2) + tree(545, 660, .9, t, 'cypress', 5);
+  // arca em terra firme, com a porta lateral (Gn 6:16) e uma rampa
+  s += `<g transform="translate(330,640) scale(1.05)">${ark(0, 0, 1, 0, 0, { animals: 0 }).replace(/^<g transform="[^"]*">/, '<g>')}</g>`;
+  s += `<path d="M376 560 L120 760 L150 772 L400 590Z" fill="${gVert('#8b5a2b', .15, -.25)}"/>${[...Array(9)].map((_, i) => `<line x1="${f1(372 - i * 28)}" y1="${f1(566 + i * 21.5)}" x2="${f1(394 - i * 28)}" y2="${f1(592 + i * 20)}" stroke="#5a3a1c" stroke-width="1.6"/>`).join('')}`;
+  // fila de pares subindo a rampa
+  const pairs = [['lion', 0], ['lion', 1], ['ele', 0], ['ele', 1], ['gir', 0], ['gir', 1], ['zeb', 0], ['zeb', 1], ['sheep', 0], ['sheep', 1]];
+  pairs.forEach(([k, j], i) => {
+    const u = ((t * .045) + (pairs.length - i) * .085) % 1;
+    const x = 40 + u * 330 + j * 18, y = 800 - u * 230 + j * 8, sc2 = .55 - u * .15, op = u > .9 ? (1 - u) * 10 : 1;
+    const g = k === 'lion' ? lion(0, 0, 1, t, j === 1, i, 1) : k === 'ele' ? elephant(0, 0, .9, t, i, 1) : k === 'gir' ? giraffe(0, 0, .8, t, i, 1) : k === 'zeb' ? zebra(0, 0, 1, t, i, 1) : sheep(0, 0, 1.1, t, i);
+    s += `<g transform="translate(${f1(x)},${f1(y)}) scale(${f1(sc2)})" opacity="${f1(op)}">${g}</g>`;
+  });
+  s += birds(t, 6, 3, 220, '#3a3a4a') + flowers(t, 830, 16, 6, -50, 300) + grassTufts(t, 860, 30, 2);
+  s += person({ who: 'noe', x: 470, y: 860, s: 1.2, t, look: -1, pose: 'open', emo: 'happy', staff: 0 });
+  return { svg: s, first: 0, shots: [WIDE, { fx: 200, fy: 650, z: 1.5, sy: 470 }, FACE(470, 860), { fx: 300, fy: 560, z: 1.3, sy: 460 }] };
 };
 
 S.hebrew = (t, p) => {

@@ -65,8 +65,8 @@ function buildTimeline(mode, timings) {
 function shotAt(shots, k, lt) {
   return shots[k % shots.length];
 }
-function camFor(block, lt, shots) {
-  const n = shots.length; const start = block.idx % n;
+function camFor(block, lt, shots, first) {
+  const n = shots.length; const start = first ?? (block.idx % n);
   const i = Math.floor(lt / SHOT); const f = (lt - i * SHOT) / SHOT;
   const cur = shots[(start + i) % n], prev = shots[(start + i - 1 + n) % n];
   const k = i === 0 ? 1 : ease(clamp((lt - i * SHOT) / 0.75, 0, 1));
@@ -83,7 +83,7 @@ function renderScene(block, T) {
   const lt = T - block.s;
   const r = S[block.sc](lt, block.p);
   const oy = SCENE_OY[block.sc] ?? -90;
-  const cam = camFor(block, lt, r.shots);
+  const cam = camFor(block, lt, r.shots, r.first);
   return `<g transform="${camTransform(cam, oy)}">${r.svg}</g>${r.ov || ''}`;
 }
 
@@ -91,15 +91,15 @@ const GOLD = '#ffd84d';
 function subtitleSVG(ch, T) {
   const lines = wrapLines(ch.text, 22);
   const kw = ch.kw; const k = clamp((T - ch.s) / .12, 0, 1);
-  const LH = 42, yb = 772, y0 = yb - (lines.length - 1) * LH;
+  const LH = 42, yb = 880, y0 = yb - (lines.length - 1) * LH;
   const wmax = Math.min(440, Math.max(...lines.map(l => l.length)) * 18.5 + 40);
-  const box = `<rect x="${f1(288 - wmax / 2)}" y="${y0 - 36}" width="${f1(wmax)}" height="${(lines.length - 1) * LH + 52}" rx="14" fill="#000" opacity="${f1(.55 * k)}"/>`;
+  const box = '';
   const txt = lines.map((ln, i) => {
     let words = ln.split(' ').map(w => {
       const hit = kw && norm(w).replace(/[^a-z\s]/g, '').startsWith(kw.k.split(' ')[0]) || /^El$|^Roi/.test(w) && kw && kw.k === 'el roi';
       return `<tspan fill="${hit ? GOLD : '#fff'}">${esc(w)}</tspan>`;
     }).join(' ');
-    return `<text x="288" y="${y0 + i * LH}" text-anchor="middle" font-family="Liberation Sans, Arial, sans-serif" font-weight="bold" font-size="33" stroke="#000" stroke-width="4" stroke-linejoin="round" paint-order="stroke" opacity="${f1(k)}">${words}</text>`;
+    return `<text x="288" y="${y0 + i * LH}" text-anchor="middle" font-family="Liberation Sans, Arial, sans-serif" font-weight="bold" font-size="34" stroke="#000" stroke-width="7" stroke-linejoin="round" paint-order="stroke" filter="url(#tsh)" opacity="${f1(k)}">${words}</text>`;
   }).join('');
   return box + txt;
 }
@@ -160,7 +160,7 @@ function frameSVG(TL, T, opts = {}) {
     if (ch) { ov += iconBadge(ch, T); ov += subtitleSVG(ch, T); }
   }
   const fadeIn = clamp(T / .6, 0, 1), fadeOut = clamp((total - T) / .8, 0, 1);
-  const vign = `<defs><radialGradient id="vg" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient><filter id="blur"><feGaussianBlur stdDeviation="5"/></filter></defs>`;
+  const vign = `<defs><radialGradient id="vg" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient><filter id="blur"><feGaussianBlur stdDeviation="5"/></filter><filter id="tsh" x="-20%" y="-40%" width="140%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000" flood-opacity=".8"/></filter></defs>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 1024" width="576" height="1024"><defs>${Object.values(DEFS).join('')}</defs>${vign}<rect width="576" height="1024" fill="#000"/>${world}<rect width="576" height="1024" fill="url(#vg)"/>${ov}${opts.safe ? safeArea() : ''}<rect width="576" height="1024" fill="#000" opacity="${f1(1 - Math.min(fadeIn, fadeOut))}"/></svg>`;
 }
 

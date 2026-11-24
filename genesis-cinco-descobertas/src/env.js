@@ -96,12 +96,12 @@ function sheep(x, y, s, t, seed = 0) {
   const wool = gRad('#f7f5ef', .1, -.18);
   return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="4" rx="24" ry="4.5" fill="#000" opacity=".18"/><rect x="-12" y="-8" width="4" height="12" fill="#3b3b3b"/><rect x="8" y="-8" width="4" height="12" fill="#3b3b3b"/>${[-15, -7, 1, 9, -11, 5].map((k, i) => `<circle cx="${k}" cy="${f1((i > 3 ? -24 : -17) + b)}" r="9.5" fill="${wool}"/>`).join('')}<ellipse cx="0" cy="${f1(-14 + b)}" rx="20" ry="11" fill="${wool}"/><g transform="translate(20,${f1(-20 + b + hd * .3)})"><ellipse cx="0" cy="0" rx="7" ry="9" fill="${gRad('#5b5048')}"/><ellipse cx="-6" cy="-4" rx="4.5" ry="2.2" fill="#4b4038"/><circle cx="2.4" cy="-2" r="1.4" fill="#111"/><circle cx="2.8" cy="-2.4" r=".5" fill="#fff"/><circle cx="-1" cy="-8" r="5.5" fill="${wool}"/></g></g>`;
 }
-function ark(x, y, s, t, rock = 1) {
+function ark(x, y, s, t, rock = 1, opts = {}) {
   const r = Math.sin(t * 1.1) * 2.5 * rock, b = Math.sin(t * 1.4) * 4 * rock;
   const wood = gVert('#8b5a2b', .15, -.3);
   let planks = ''; for (let i = 1; i < 6; i++) planks += `<path d="M-160 ${-i * 12} L160 ${-i * 12}" stroke="#4a2e14" stroke-width="1.6" opacity=".55"/>`;
   for (let i = 0; i < 12; i++) planks += `<line x1="${-140 + i * 25}" y1="${-12 * (1 + i % 5)}" x2="${-140 + i * 25}" y2="${-12 * (2 + i % 5)}" stroke="#4a2e14" stroke-width="1.2" opacity=".5"/>`;
-  return `<g transform="translate(${f1(x)},${f1(y + b)}) rotate(${f1(r)}) scale(${s})"><path d="M-172 -76 L172 -76 L152 0 Q0 18 -152 0Z" fill="${wood}"/>${planks}<path d="M-152 0 Q0 18 152 0" stroke="#2e1a0a" stroke-width="5" fill="none"/><rect x="-112" y="-132" width="224" height="58" fill="${gVert('#a06c36', .12, -.25)}"/>${[-90, -60, -30, 0, 30, 60, 90].map(k => `<line x1="${k}" y1="-132" x2="${k}" y2="-74" stroke="#5a3a1c" stroke-width="1.2" opacity=".6"/>`).join('')}<path d="M-128 -130 L0 -168 L128 -130Z" fill="${gVert('#6e4520', .1, -.3)}"/>${[0, 1, 2, 3].map(k => `<path d="M${-110 + k * 10} ${-134 + k * -9} L${110 - k * 10} ${-134 + k * -9}" stroke="#4a2e14" stroke-width="1.2" opacity=".6"/>`).join('')}<rect x="-120" y="-122" width="240" height="10" fill="#2a1a0a" opacity=".55"/><rect x="40" y="-112" width="38" height="38" fill="#4a2e14"/><rect x="44" y="-108" width="30" height="34" fill="#5d3b1f"/><circle cx="68" cy="-90" r="2" fill="#c9a14a"/><line x1="-172" y1="-76" x2="172" y2="-76" stroke="#4a2e14" stroke-width="3"/></g>`;
+  return `<g transform="translate(${f1(x)},${f1(y + b)}) rotate(${f1(r)}) scale(${s})"><path d="M-172 -76 L172 -76 L152 0 Q0 18 -152 0Z" fill="${wood}"/>${planks}<path d="M-152 0 Q0 18 152 0" stroke="#2e1a0a" stroke-width="5" fill="none"/><rect x="-112" y="-132" width="224" height="58" fill="${gVert('#a06c36', .12, -.25)}"/>${[-90, -60, -30, 0, 30, 60, 90].map(k => `<line x1="${k}" y1="-132" x2="${k}" y2="-74" stroke="#5a3a1c" stroke-width="1.2" opacity=".6"/>`).join('')}<path d="M-128 -130 L0 -168 L128 -130Z" fill="${gVert('#6e4520', .1, -.3)}"/>${[0, 1, 2, 3].map(k => `<path d="M${-110 + k * 10} ${-134 + k * -9} L${110 - k * 10} ${-134 + k * -9}" stroke="#4a2e14" stroke-width="1.2" opacity=".6"/>`).join('')}<rect x="-120" y="-122" width="240" height="10" fill="#2a1a0a" opacity=".55"/><rect x="40" y="-112" width="38" height="38" fill="#4a2e14"/><rect x="44" y="-108" width="30" height="34" fill="#5d3b1f"/><circle cx="68" cy="-90" r="2" fill="#c9a14a"/><line x1="-172" y1="-76" x2="172" y2="-76" stroke="#4a2e14" stroke-width="3"/>${opts.animals ? arkAnimals(t, opts.calm) : ''}</g>`;
 }
 function basket(x, y, s, t, baby = true, floatOn = true) {
   const b = floatOn ? Math.sin(t * 1.6) * 3 : 0, r = floatOn ? Math.sin(t * 1.1) * 3 : 0;
@@ -160,4 +160,48 @@ function lotus(x, y, s, t) {
 function ibis(x, y, s, t) {
   const p = Math.sin(t * .9) * 4;
   return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><line x1="-3" y1="0" x2="-4" y2="-22" stroke="#333" stroke-width="2"/><line x1="4" y1="0" x2="3" y2="-22" stroke="#333" stroke-width="2"/><ellipse cx="0" cy="-30" rx="14" ry="9" fill="${gRad('#f2f2ee')}"/><path d="M-12 -30 l-8 6 l6 -1Z" fill="#222"/><path d="M8 -34 Q14 -50 12 ${f1(-56 + p)}" stroke="#222" stroke-width="3" fill="none"/><path d="M12 ${f1(-56 + p)} Q24 ${f1(-52 + p)} 28 ${f1(-40 + p)}" stroke="#222" stroke-width="2" fill="none"/></g>`;
+}
+
+// ===== Animais da arca =====
+function lionHead(x, y, s, t, female = false, seed = 0) {
+  const b = Math.sin(t * 1.3 + seed) * 1.2, mane = gRad('#a8561f', .2, -.25), fur = gRad('#e0a24a', .2, -.2);
+  let m = '';
+  if (!female) for (let i = 0; i < 14; i++) { const a = i / 14 * 6.283; m += `<ellipse cx="${f1(Math.cos(a) * 15)}" cy="${f1(Math.sin(a) * 15)}" rx="8" ry="11" fill="${mane}" transform="rotate(${f1(a * 57.3 + 90)} ${f1(Math.cos(a) * 15)} ${f1(Math.sin(a) * 15)})"/>`; }
+  return `<g transform="translate(${f1(x)},${f1(y + b)}) scale(${s})">${m}<circle r="${female ? 13 : 14}" fill="${fur}"/><circle cx="-10" cy="-11" r="4.5" fill="${fur}"/><circle cx="10" cy="-11" r="4.5" fill="${fur}"/><circle cx="-10" cy="-11" r="2" fill="#7a4420"/><circle cx="10" cy="-11" r="2" fill="#7a4420"/><ellipse cx="0" cy="6" rx="7.5" ry="5.5" fill="#f3d6a0"/><path d="M-2.6 2.5 L2.6 2.5 L0 5.2Z" fill="#4a2a1a"/><path d="M0 5.2 Q-3 8.5 -5 7 M0 5.2 Q3 8.5 5 7" stroke="#4a2a1a" stroke-width="1" fill="none"/><ellipse cx="-5" cy="-3" rx="2.4" ry="2" fill="#f7e08a"/><ellipse cx="5" cy="-3" rx="2.4" ry="2" fill="#f7e08a"/><circle cx="-5" cy="-3" r="1.1" fill="#111"/><circle cx="5" cy="-3" r="1.1" fill="#111"/><path d="M-8 -6 l5 1 M8 -6 l-5 1" stroke="#7a4420" stroke-width="1"/></g>`;
+}
+function lion(x, y, s, t, female = false, seed = 0, walk = 0) {
+  const ph = walk ? Math.sin(t * 5 * walk + seed) : 0, body = gLin('#d99a44', .2, -.25);
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="2" rx="34" ry="5" fill="#000" opacity=".18"/>${[[-20, ph], [-12, -ph], [14, -ph], [22, ph]].map(([k, q]) => `<rect x="${f1(k - 3 + q * 3)}" y="-24" width="7" height="24" rx="3" fill="${body}"/>`).join('')}<ellipse cx="0" cy="-30" rx="32" ry="14" fill="${body}"/><path d="M-30 -32 Q-48 -40 -46 -20" stroke="#c98a3a" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="-46" cy="-19" r="3.5" fill="#7a4420"/>${lionHead(30, -40, .85, t, female, seed)}</g>`;
+}
+function giraffe(x, y, s, t, seed = 0, walk = 0) {
+  const sp = gLin('#e8b452', .15, -.2), nk = Math.sin(t * .9 + seed) * 3, ph = walk ? Math.sin(t * 4 * walk + seed) : 0;
+  let spots = ''; for (let i = 0; i < 9; i++) spots += `<ellipse cx="${f1(-18 + rnd(seed + i) * 36)}" cy="${f1(-70 + rnd(i * 3 + seed) * 18)}" rx="4.5" ry="3.5" fill="#a8621f" opacity=".8"/>`;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="2" rx="30" ry="5" fill="#000" opacity=".16"/>${[[-16, ph], [-8, -ph], [10, -ph], [18, ph]].map(([k, q]) => `<rect x="${f1(k - 2.5 + q * 3)}" y="-58" width="5" height="58" fill="${sp}"/>`).join('')}<ellipse cx="0" cy="-64" rx="26" ry="14" fill="${sp}"/>${spots}<path d="M16 -70 Q${f1(26 + nk)} -110 ${f1(28 + nk)} -150" stroke="#e8b452" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M14 -74 Q${f1(22 + nk)} -110 ${f1(24 + nk)} -146" stroke="#a8621f" stroke-width="2" fill="none" stroke-dasharray="4 6"/><g transform="translate(${f1(30 + nk)},-156)"><ellipse cx="6" cy="2" rx="12" ry="7" fill="${sp}"/><circle cx="3" cy="-1" r="1.6" fill="#111"/><line x1="-2" y1="-6" x2="-3" y2="-14" stroke="#a8621f" stroke-width="2.4"/><line x1="4" y1="-6" x2="4" y2="-14" stroke="#a8621f" stroke-width="2.4"/><circle cx="-3" cy="-15" r="2" fill="#7a4420"/><circle cx="4" cy="-15" r="2" fill="#7a4420"/><ellipse cx="-6" cy="-4" rx="4" ry="2" fill="#d9a040"/></g></g>`;
+}
+function elephant(x, y, s, t, seed = 0, walk = 0) {
+  const g = gLin('#9aa0a8', .15, -.25), tr = Math.sin(t * 1.2 + seed) * 6, ph = walk ? Math.sin(t * 3 * walk + seed) : 0;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="2" rx="40" ry="6" fill="#000" opacity=".18"/>${[[-22, ph], [-10, -ph], [12, -ph], [24, ph]].map(([k, q]) => `<rect x="${f1(k - 5 + q * 3)}" y="-30" width="11" height="30" rx="4" fill="${g}"/>`).join('')}<ellipse cx="0" cy="-40" rx="38" ry="24" fill="${g}"/><g transform="translate(34,-46)"><ellipse cx="-8" cy="0" rx="14" ry="18" fill="#868c94"/><circle cx="4" cy="-2" r="14" fill="${g}"/><path d="M12 4 Q${f1(20 + tr * .3)} 22 ${f1(14 + tr)} 34" stroke="#9aa0a8" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M12 8 l7 4" stroke="#f3efe6" stroke-width="3" stroke-linecap="round"/><circle cx="7" cy="-6" r="1.6" fill="#111"/></g></g>`;
+}
+function zebra(x, y, s, t, seed = 0, walk = 0) {
+  const ph = walk ? Math.sin(t * 4 * walk + seed) : 0;
+  let st = ''; for (let i = 0; i < 7; i++) st += `<path d="M${-22 + i * 7} -60 q3 10 0 18" stroke="#1b1b1b" stroke-width="3" fill="none"/>`;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="2" rx="28" ry="5" fill="#000" opacity=".16"/>${[[-16, ph], [-8, -ph], [10, -ph], [18, ph]].map(([k, q]) => `<rect x="${f1(k - 2.5 + q * 3)}" y="-40" width="5" height="40" fill="#f4f4f0" stroke="#1b1b1b" stroke-width=".8"/>`).join('')}<ellipse cx="0" cy="-48" rx="26" ry="13" fill="${gRad('#f6f6f2')}"/>${st}<path d="M18 -54 L32 -76 L42 -66 L28 -46Z" fill="#f4f4f0"/><path d="M22 -60 l8 4 M26 -66 l8 4" stroke="#1b1b1b" stroke-width="2.5"/><ellipse cx="42" cy="-68" rx="7" ry="5" fill="#2a2a2a"/><circle cx="34" cy="-72" r="1.3" fill="#111"/><path d="M20 -56 L30 -78" stroke="#1b1b1b" stroke-width="3"/></g>`;
+}
+function birdPerched(x, y, s, col = '#3d7ac9', t = 0, seed = 0) {
+  const h = Math.sin(t * 2 + seed) * 2;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="-6" rx="7" ry="5.5" fill="${col}"/><circle cx="5" cy="${f1(-11 + h * .3)}" r="4" fill="${col}"/><path d="M8.5 ${f1(-11 + h * .3)} l4 1 l-4 1Z" fill="#f0a020"/><circle cx="6" cy="${f1(-12 + h * .3)}" r=".9" fill="#111"/><path d="M-6 -6 l-6 3 l6 1Z" fill="${shade(col, -.25)}"/></g>`;
+}
+// animais aparecendo na arca (coordenadas locais da arca)
+function arkAnimals(t, calm) {
+  let s = '';
+  // janelas da cabine com cabeças
+  s += lionHead(-98, -110, .55, t, false, 1) + lionHead(-74, -108, .5, t, true, 2);
+  s += `<g transform="translate(-50,-110)"><circle r="7.5" fill="${gRad('#9aa0a8')}"/><path d="M4 2 q6 6 3 12" stroke="#9aa0a8" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="2" cy="-2" r="1" fill="#111"/></g>`;
+  s += `<g transform="translate(98,-110)"><ellipse cx="0" cy="0" rx="6" ry="7" fill="#f4f4f0"/><path d="M-4 -4 l8 0 M-4 0 l8 0 M-4 4 l8 0" stroke="#1b1b1b" stroke-width="1.6"/><circle cx="2" cy="-1" r="1" fill="#111"/></g>`;
+  // girafas pelo teto
+  const nk = Math.sin(t * .8) * 3;
+  s += `<path d="M84 -128 Q${f1(90 + nk)} -160 ${f1(92 + nk)} -190" stroke="#e8b452" stroke-width="9" fill="none" stroke-linecap="round"/><g transform="translate(${f1(94 + nk)},-196)"><ellipse cx="5" cy="2" rx="9" ry="5.5" fill="#e8b452"/><circle cx="3" cy="0" r="1.3" fill="#111"/><line x1="-1" y1="-4" x2="-2" y2="-11" stroke="#a8621f" stroke-width="2"/><line x1="4" y1="-4" x2="4" y2="-11" stroke="#a8621f" stroke-width="2"/></g>`;
+  s += `<path d="M64 -128 Q${f1(68 - nk)} -152 ${f1(66 - nk)} -176" stroke="#e0a848" stroke-width="8" fill="none" stroke-linecap="round"/><g transform="translate(${f1(64 - nk)},-181)"><ellipse cx="-4" cy="2" rx="8" ry="5" fill="#e0a848"/><circle cx="-2" cy="0" r="1.2" fill="#111"/></g>`;
+  if (calm) s += birdPerched(-30, -160, 1.2, '#3d7ac9', t) + birdPerched(-10, -164, 1.1, '#e0475b', t, 2) + birdPerched(110, -126, 1, '#f0c040', t, 4) + `<g transform="translate(-120,-128) scale(.6)">${sheep(0, 0, 1, t, 3)}</g>`;
+  return s;
 }

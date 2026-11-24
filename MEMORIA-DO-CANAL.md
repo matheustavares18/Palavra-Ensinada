@@ -35,3 +35,10 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   belos olhos, 1Sm 16:12; Noé com 600 anos, Gn 7:6; Agar egípcia, Gn 16:1; João com pelos de camelo, Mt 3:4),
   roupas com bordados, faixas e dobras, cenários com profundidade e vida, e reações faciais de acordo com cada fala
   (alegria, tristeza, choro, surpresa, vergonha, admiração, oração).
+- Legendas (correção 2): **sem fundo escuro**, bem embaixo (≈85% da altura), texto branco com contorno preto e
+  sombra; palavra-chave em dourado. Não podem atrapalhar as imagens.
+- Braços e mãos com anatomia real: ombro, cotovelo (dobra natural), antebraço afinando até o punho, mangas largas
+  com punho bordado e mãos com 4 dedos + polegar (relaxada, aberta, apontando, segurando, em oração). Sempre conferir
+  mãos e braços nas capturas antes de entregar.
+- Enoque: sempre com um brilho suave envolvendo o corpo (andar com Deus).
+- Arca de Noé: animais aparentes (leões, elefante, girafas, zebra, aves, ovelhas); entrada dos animais aos pares.
