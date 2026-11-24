@@ -146,7 +146,7 @@ function cardSVG(seg, T) {
   const LH = 52, hh = (lines.length - 1) * LH;
   let s = lines.map((l, i) => `<text x="0" y="${i * LH}" text-anchor="middle" font-family="Cinzel, 'Liberation Serif', serif" font-weight="900" font-size="40" stroke="#1a0d00" stroke-width="8" stroke-linejoin="round" paint-order="stroke" filter="url(#tsh)">${l.split(' ').map(w => /\*/.test(w) ? `<tspan fill="${gold}">${esc(w.replace(/\*/g, ''))}</tspan>` : `<tspan fill="#fffaf0">${esc(w)}</tspan>`).join(' ')}</text>`).join('');
   const orn = y => `<g transform="translate(0,${y})"><line x1="-120" y1="0" x2="-22" y2="0" stroke="#ffd84d" stroke-width="2"/><line x1="22" y1="0" x2="120" y2="0" stroke="#ffd84d" stroke-width="2"/>${starShape(0, 0, 9, '#ffd84d')}</g>`;
-  return shade + `<g transform="translate(288,${235 - hh / 2}) scale(${f1(sc)})">${orn(-48)}${s}${orn(hh + 26)}</g>`;
+  return shade + `<g transform="translate(288,${235 - hh / 2}) scale(${f1(sc)})">${s}</g>`;
 }
 // Transição de parte: quadro com os 5 símbolos (o da vez em destaque) + título centralizado no topo
 const PART_ICONS = ['star', 'steps', 'hebrew', 'eye', 'fur'];
