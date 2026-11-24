@@ -253,7 +253,7 @@ S.tent = (t, p) => {
   s += dunes(t, 600, ['#e0b56a', '#d4a258', '#c38f48']);
   s += tent(150, 720, 1.4) + tree(525, 700, .8, t, 'palm', 3) + sheep(495, 822, .9, t, 1) + sheep(440, 840, .8, t, 4);
   s += `<g transform="translate(330,660)"><path d="M0 0 L-10 30 M0 0 L10 30 M0 0 L0 30" stroke="#5a3a1c" stroke-width="3"/><path d="M-12 0 L12 0 L8 -10 L-8 -10Z" fill="#7a3a20"/></g>`;
-  s += person({ who: 'sarai', x: 225, y: 830, s: 1.2, t, look: 1, pose: 'point', talk: p.talk ?? 1, emo: 'stern' });
+  s += person({ who: 'sarai', x: 225, y: 830, s: 1.2, t, look: 1, pose: 'point', talk: false, emo: 'stern' });
   s += person({ who: 'agar', x: 420, y: 840, s: 1.2, t, look: -1, pose: p.leave ? 'wipe' : 'belly', emo: p.leave ? 'cry' : 'sad', walk: p.leave ? .6 : 0, flip: !!p.leave });
   return { svg: s, shots: [WIDE, FACE(225, 830), FACE(420, 840), { fx: 330, fy: 640, z: 1.35, sy: 480 }] };
 };
@@ -270,7 +270,7 @@ S.hagar = (t, p) => {
   if (p.spring) s += tree(120, 760, .9, t, 'palm', 1) + tree(470, 750, .8, t, 'palm', 2) + spring(288, 830, 1.1, t);
   const flee = p.flee;
   const hx = flee ? 140 + (t * 22) % 300 : (p.spring ? 190 : 288);
-  if (p.angel) { const k = easeOut(t / 1.2); s += `<g opacity="${f1(k)}">` + person({ who: 'anjo', x: 400, y: 810, s: 1.22, t, look: -1, pose: 'open', talk: !!p.talk }) + `</g>`; }
+  if (p.angel) { const k = easeOut(t / 1.2); s += `<g opacity="${f1(k)}">` + person({ who: 'anjo', x: 400, y: 810, s: 1.22, t, look: -1, pose: 'open', talk: !!p.talk && SPEAK }) + `</g>`; }
   s += person({ who: 'agar', x: hx, y: 820, s: 1.2, t, walk: flee ? .7 : 0, look: p.angel ? 1 : .4, lookY: p.lookUp ? -1 : undefined, pose: p.pose || (p.sit ? 'sit' : 'belly'), emo: p.emo || (flee ? 'cry' : 'sad') });
   let ov = '';
   if (p.names) { const k = easeOut(t / .8); ov += `<g opacity="${f1(k)}" text-anchor="middle" font-family="Liberation Sans, Arial" font-weight="bold">${p.names.map((n, i) => `<g transform="translate(${f1(p.names.length > 1 ? 150 + i * 276 : 288)},240)">${glow(0, 0, 80, '#fff3c4', .6)}<circle r="52" fill="#fff8e6" stroke="#d7a84a" stroke-width="4"/><g transform="translate(0,-4) scale(1.3)">${ICONS[n.ic]()}</g><text y="86" font-size="30" fill="#fff" stroke="#3a1a00" stroke-width="5" paint-order="stroke">${n.a}</text><text y="116" font-size="22" fill="#ffd84d" stroke="#3a1a00" stroke-width="4" paint-order="stroke">“${n.b}”</text></g>`).join('')}</g>`; }
@@ -324,7 +324,7 @@ S.jordan = (t, p) => {
   s += reeds(t, -100, 120, 720, 14, 2, 110) + reeds(t, 470, 700, 720, 14, 6, 110);
   s += `<path d="M-400 840 Q288 800 1000 840 L1000 1400 L-400 1400Z" fill="${gVert('#c9b07a')}"/>` + rocks(520, 880, .8) + rocks(40, 900, .7);
   s += crowd(t, 690, 4, 4, .7, { x0: 330, gap: 60, look: -1, emo: 'awe' });
-  s += person({ who: 'joao', x: 170, y: 900, s: 1.25, t, look: 1, pose: 'point', talk: !!p.talk, emo: p.talk ? 'joy' : 'awe' });
+  s += person({ who: 'joao', x: 170, y: 900, s: 1.25, t, look: 1, pose: 'point', talk: !!p.talk && SPEAK, emo: p.talk ? 'joy' : 'awe' });
   s += person({ who: 'jesus', x: 420, y: 900, s: 1.25, t, look: -.5, walk: p.walk ? .5 : 0, emo: 'peace' });
   if (p.lamb) s += `<g transform="translate(420,540) scale(${f1(pop(t / .6))})">${glow(0, -10, 80, '#fff3c4', .7)}${sheep(-4, 14, 1.2, t)}</g>`;
   return { svg: s, shots: [WIDE, FACE(170, 900, 1.25), FACE(420, 900, 1.25), { fx: 300, fy: 700, z: 1.3, sy: 500 }] };

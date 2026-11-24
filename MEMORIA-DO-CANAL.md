@@ -52,3 +52,15 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   cada palavra-chave. A palavra-chave continua em dourado na legenda.
 - Frases de destaque: fonte própria e bem notada (**Cinzel Black**, dourado com contorno e ornamentos), diferente
   da fonte da legenda.
+
+## Som, miniatura e publicação
+- Trilha: instrumental **original gerada por síntese** (`tools/trilha.py`): pads e arpejo suave em Ré maior, com
+  reverberação. Sem música de terceiros. Efeitos sintetizados por cena: chuva e ondas na arca, rio e pássaros no
+  Nilo/Éden/Jordão, vento no deserto, fogueira e grilos à noite, multidão na cidade, página virando na abertura,
+  "whoosh" na troca de parte e um sino suave nas frases de destaque.
+- Na versão final com voz: a trilha fica mais baixa e abaixa sozinha quando o narrador fala (ducking).
+- Personagens só mexem a boca quando o narrador cita a fala deles (trecho entre aspas no roteiro).
+- Miniatura 1280×720 (`tools/thumb.py`): "5 COISAS QUE VOCÊ NUNCA PERCEBEU EM [LIVRO]", Bíblia brilhando, os 5
+  símbolos e personagens com expressão de surpresa.
+- Capítulos e legenda .srt (`tools/youtube.py`): refazer com os tempos da voz final.
+- Pendente (o usuário vai pedir em breve): versão horizontal 16:9 do vídeo longo.

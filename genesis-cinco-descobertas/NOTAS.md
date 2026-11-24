@@ -9,6 +9,8 @@ e o fechamento (padrão do canal, sem falar do próximo vídeo). Os títulos das
 - `previa.html`: prévia animada (576×1024), com seletor Vídeo completo / Shorts 1–5, botão "Carregar narração (mp3)" e a área segura sobreposta.
 - `video/*-v2-SEM-VOZ.mp4`: vídeo completo e 5 cortes verticais, 1080×1920, 24 fps, sem áudio.
 - `roteiro.txt`: texto da narração do vídeo completo (uma gravação só). `roteiro-shorts.txt`: texto de cada corte.
+- `miniatura-youtube.png`: miniatura 1280×720. `youtube-capitulos.txt` e `legenda.srt`: capítulos e legenda (tempos estimados; refazer com a voz final).
+- `tools/`: trilha e efeitos (`trilha.py`), miniatura (`thumb.py`), capítulos/legenda (`youtube.py`), exportar linha do tempo (`export.js`).
 - `src/`: código das cenas (`scenes.js`), personagens (`person.js`), roteiro → cenas (`timeline.js`).
 - Para montar de novo: `python3 build.py`.
 
@@ -58,5 +60,7 @@ Você já leu Gênesis, talvez várias vezes. Mas já percebeu estes detalhes?
 🐑 As vestes de pele e o Cordeiro de Deus (Gn 3:21; Jo 1:29)
 
 Qual dessas descobertas você nunca tinha percebido? Conta aqui nos comentários.
+
+**Capítulos:** ver `youtube-capitulos.txt` (colar no fim da descrição).
 
 **Hashtags:** #Bíblia #Gênesis #PalavraEnsinada #CuriosidadesBíblicas #EstudoBíblico #Fé #Jesus #Shorts

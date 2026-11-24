@@ -2,7 +2,8 @@
 const CPS = 17.2;          // ~170 palavras/min: ritmo ágil de narrador (estimativa até existir a narração final)
 const CPS_SHORT = 18.2;    // Shorts: mesma voz ~6% mais rápida (ritmo de Shorts)
 const GAP = 0.2;           // respiro entre falas
-const SHOT = 2.6;          // troca de enquadramento a cada ~2,6 s
+const SHOT = 2.6;
+let SPEAK = false;          // narrador citando a fala de um personagem          // troca de enquadramento a cada ~2,6 s
 const XFADE = 0.35;        // transição entre cenas
 const TAIL = 2.0;          // tela depois da última palavra
 const SCENE_OY = { themeTitle: 0, recap: 0, end: 0, attributes: 0, comment: 0, hebrew: 0, galaxy: 0, scroll: 0, bibleIntro: 0 };
@@ -46,7 +47,10 @@ function buildTimeline(mode, timings) {
     if (timings && timings[i]) { start = timings[i][0]; dur = timings[i][1] - timings[i][0]; }
     const chunks = chunkText(txt); const tot = chunks.reduce((a, c) => a + c.length + 4, 0);
     let ct = start; const cs = chunks.map(c => { const d = dur * (c.length + 4) / tot; const o = { text: c, s: ct, e: ct + d, kw: findKeyword(c) }; ct += d; return o; });
-    segs.push({ ...e, s: start, e: start + dur, chunks: cs, i });
+    // trecho citado entre aspas (fala de um personagem): a boca dele mexe só aí
+    let q = null; const q1 = e.t.indexOf('"'), q2 = e.t.lastIndexOf('"');
+    if (q1 >= 0 && q2 > q1) { const L = txt.length || 1; q = [start + dur * q1 / L, start + dur * Math.min(1, (q2 - 1) / L)]; }
+    segs.push({ ...e, s: start, e: start + dur, chunks: cs, i, q });
     T = start + dur + GAP;
   });
   // blocos de cena contínuos
@@ -161,6 +165,7 @@ function safeArea() {
 function frameSVG(TL, T, opts = {}) {
   const { blocks, segs, total } = TL;
   DEFS = {}; _uid = 0;
+  SPEAK = segs.some(g => g.q && T >= g.q[0] && T <= g.q[1]);
   let bi = blocks.findIndex(b => T >= b.s && T < b.e); if (bi < 0) bi = T < 0 ? 0 : blocks.length - 1;
   const b = blocks[bi];
   let world = renderScene(b, T);
