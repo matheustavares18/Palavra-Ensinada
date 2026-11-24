@@ -83,3 +83,6 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   últimas frases (aconteceu no fechamento do Gênesis). Fechamento sempre em pedido separado.
 - Se a cota diária do `gemini-2.5-flash-preview-tts` acabar, o `gemini-3.8-flash-tts` (cota separada) serve com a
   mesma voz, mas **só com o texto puro** (não aceita instrução de sistema e lê em voz alta instruções no texto).
+- Mixagem: o `loudnorm` do ffmpeg (modo dinâmico) segura ~3 s no fim e cortava a última frase (fim do vídeo e a
+  chamada "Vídeo completo no canal…" dos Shorts). `tools/mixar.sh` agora acrescenta silêncio antes e corta depois.
+  Sempre conferir, no MP4 final, que há voz na última fala.

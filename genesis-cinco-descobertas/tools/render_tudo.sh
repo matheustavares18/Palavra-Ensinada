@@ -15,7 +15,7 @@ for part in ${PARTS:-full 1 2 3 4 5}; do
   $D/tools/mixar.sh $D/narracao_final/narracao_$part.wav trilha_$part.wav mix_$part.wav
   for w in 0 1 2 3; do node render.js $H $part 24 1.875 $w 4 /tmp/claude-0/pe/fr_$part & done; wait
   name=$([ $part = full ] && echo "genesis-5-descobertas-completo" || echo "short-$part")
-  ffmpeg -y -loglevel error -framerate 24 -i fr_$part/%06d.jpg -i mix_$part.wav -map 0:v -map 1:a -af apad -shortest -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart $OUT/$name-FINAL-v3.mp4
+  ffmpeg -y -loglevel error -framerate 24 -i fr_$part/%06d.jpg -i mix_$part.wav -map 0:v -map 1:a -af apad -shortest -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart $OUT/$name-FINAL-v4.mp4
   rm -rf fr_$part
   echo "ok $part"
 done
