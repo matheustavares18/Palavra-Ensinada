@@ -103,7 +103,7 @@ def align(x, lines):
     return res
 
 # ---------- vídeo completo ----------
-groups = ['g1', 'g2', 'g3', 'g4', 'g5']
+groups = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6']
 full = [np.zeros(int(LEAD * SR))]; t = LEAD; T_full = []; audio_line = []  # audio_line: (amostra_ini, amostra_fim) de cada fala
 segs = TL['segs']; si = 0
 for g in groups:

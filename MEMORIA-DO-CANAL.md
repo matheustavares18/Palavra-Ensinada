@@ -79,3 +79,7 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   narração). O render (`tools/render_tudo.sh`) SEMPRE remonta a página e roda `tools/conferir.py` antes; se a
   conferência falhar, não renderiza. Erro que aconteceu: render feito com a página montada antes do último
   alinhamento.
+- Narração em pedidos de **até ~2.000 caracteres**: no fim de pedidos longos o Gemini TTS fica robótico e pula as
+  últimas frases (aconteceu no fechamento do Gênesis). Fechamento sempre em pedido separado.
+- Se a cota diária do `gemini-2.5-flash-preview-tts` acabar, o `gemini-3.8-flash-tts` (cota separada) serve com a
+  mesma voz, mas **só com o texto puro** (não aceita instrução de sistema e lê em voz alta instruções no texto).

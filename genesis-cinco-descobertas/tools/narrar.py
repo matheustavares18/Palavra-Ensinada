@@ -27,7 +27,8 @@ def groups(tl, shorts):
     by = lambda f: [s['t'] for s in segs if f(s['sec'])]
     G.append(('g1', by(lambda x: x in ('hook', 1))))
     for n in (2, 3, 4): G.append((f'g{n}', by(lambda x, n=n: x == n)))
-    G.append(('g5', by(lambda x: x in (5, 'end'))))
+    G.append(('g5', by(lambda x: x == 5)))
+    G.append(('g6', by(lambda x: x == 'end')))  # fechamento separado: pedidos longos perdem qualidade no fim
     G.append(('extras', shorts))
     return G
 
