@@ -130,7 +130,9 @@ def main(js, out):
     musL = norm(L, .32)[:n]; musR = norm(R, .32)[:n]
     fx = np.zeros((2, n))
     def add(sig, t0, gain, pan=.5):
-        a = int(t0 * SR); b = min(n, a + len(sig))
+        a = int(t0 * SR)
+        if a < 0: sig = sig[-a:]; a = 0
+        b = min(n, a + len(sig))
         if b > a: fx[0, a:b] += sig[:b - a] * gain * (1 - pan) * 2; fx[1, a:b] += sig[:b - a] * gain * pan * 2
     for bl in d['blocks']:
         sc = bl['sc']; p = bl['p'] or {}
