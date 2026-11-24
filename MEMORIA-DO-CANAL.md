@@ -48,3 +48,7 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   camelos, bois, ovelhas, aves…).
 - Transição de parte: quadro **centralizado no topo** com os 5 símbolos das descobertas (o da vez em destaque,
   claro e dourado; os anteriores com ✓; os próximos apagados), "Nª DESCOBERTA" e o título embaixo.
+- Ícones em bolinha: **só em momentos específicos** que pedem (ex.: folhas de figueira, peles, o animal), não a
+  cada palavra-chave. A palavra-chave continua em dourado na legenda.
+- Frases de destaque: fonte própria e bem notada (**Cinzel Black**, dourado com contorno e ornamentos), diferente
+  da fonte da legenda.

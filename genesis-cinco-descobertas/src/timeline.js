@@ -106,18 +106,18 @@ L('E existe uma aplicação muito preciosa aqui.', 'crowdAlone', {});
 L('Às vezes, as pessoas não percebem nossas dores. Algumas não conhecem nossas histórias, outras simplesmente não se importam.', 'crowdAlone', { k: 2, emo: 'cry' });
 L('Mas a falta de reconhecimento humano nunca significou ausência de atenção da parte de Deus.', 'crowdAlone', { light: 1, emo: 'surprise' });
 L('Você pode passar despercebido aos olhos de muitas pessoas, mas nunca deve confundir o silêncio dos homens com a ausência de Deus.', 'crowdAlone', { light: 1, k: 2 });
-L('Aquele que vê também ouve.', 'hagar', { spring: 1, emo: 'joy', names: [{ ic: 'eye', a: 'El Roi', b: 'Deus que vê' }, { ic: 'ear', a: 'Ismael', b: 'Deus ouve' }], k: 2 }, { impact: 'Aquele que *vê* também *ouve*.' });
+L('Aquele que vê também ouve.', 'hagar', { spring: 1, emo: 'joy', lookUp: 1, pose: 'raise', k: 2 }, { impact: 'Aquele que *vê* também *ouve*.' });
 
 // ---------- 5. A COBERTURA ----------
 sec(5);
 const B5 = { n: 5, name: 'A cobertura' };
 L('Em Gênesis, capítulo 3, versículo 21, encontramos um detalhe que talvez passe despercebido durante a leitura.', 'eden', { fig: 1, emo: 'neutral', pose: 'cover' }, R('GÊNESIS 3:21'), B5);
-L('Depois que Adão e Eva desobedeceram a Deus, perceberam que estavam nus e tentaram cobrir sua vergonha utilizando folhas de figueira.', 'eden', { fig: 1, pick: 1, emo: 'shame' });
+L('Depois que Adão e Eva desobedeceram a Deus, perceberam que estavam nus e tentaram cobrir sua vergonha utilizando folhas de figueira.', 'eden', { fig: 1, pick: 1, emo: 'shame', badge: 'leaf' });
 L('Mas existe algo interessante no que acontece em seguida.', 'eden', { fig: 1, emo: 'worried', k: 2 });
-L('O texto diz que Deus fez vestimentas de peles para Adão e sua mulher e os vestiu.', 'eden', { give: 1, lookUp: 1, pose: 'surprise', emo: 'surprise' }, R('GÊNESIS 3:21'));
+L('O texto diz que Deus fez vestimentas de peles para Adão e sua mulher e os vestiu.', 'eden', { give: 1, lookUp: 1, pose: 'surprise', emo: 'surprise', badge: 'fur' }, R('GÊNESIS 3:21'));
 L('Perceba o contraste: o homem tentou produzir sua própria cobertura,', 'eden', { fig: 1, pick: 1, emo: 'shame', k: 3 });
 L('mas foi Deus quem providenciou aquilo de que ele realmente precisava.', 'eden', { skins: 1, give: 1, lookUp: 1, emo: 'happy', pose: 'chest' });
-L('E aqui existe um detalhe que merece nossa atenção: para que aquelas vestimentas de pele existissem, um animal precisou morrer.', 'eden', { skins: 1, emo: 'sad', k: 2 });
+L('E aqui existe um detalhe que merece nossa atenção: para que aquelas vestimentas de pele existissem, um animal precisou morrer.', 'eden', { skins: 1, emo: 'sad', k: 2, badge: 'lamb' });
 L('Gênesis não explica diretamente como essas peles foram obtidas, nem afirma que aquele animal foi oferecido como sacrifício pelo pecado.', 'bibleIntro', { lens: 1, glow: .5, label: 'GÊNESIS 3' }, { impact: 'O texto *não* detalha.' });
 L('Mas essa cena nos permite refletir sobre algo muito maior.', 'eden', { skins: 1, emo: 'peace', k: 3 });
 L('O pecado havia introduzido uma realidade que o próprio homem não conseguia resolver.', 'eden', { after: 1, fig: 1, emo: 'cry' });

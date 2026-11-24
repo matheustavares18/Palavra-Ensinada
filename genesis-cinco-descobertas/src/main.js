@@ -104,11 +104,12 @@ function subtitleSVG(ch, T) {
   return box + txt;
 }
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-function iconBadge(ch, T) {
-  if (!ch.kw || !ICONS[ch.kw.ic]) return '';
-  const k = pop((T - ch.s) / .35); if (k <= 0) return '';
+function iconBadge(seg, T) {
+  // ícone só em momentos escolhidos (p.badge na fala)
+  const ic = seg.p && seg.p.badge; if (!ic || !ICONS[ic]) return '';
+  const k = pop((T - seg.s - .3) / .35); if (k <= 0) return '';
   const fl = Math.sin(T * 2) * 3;
-  return `<g transform="translate(438,${f1(512 + fl)}) scale(${f1(k)})"><circle r="36" fill="#fff8e6" stroke="#d7a84a" stroke-width="3"/><g transform="scale(.9)">${ICONS[ch.kw.ic]()}</g></g>`;
+  return `<g transform="translate(438,${f1(470 + fl)}) scale(${f1(k * 1.3)})">${glow(0, 0, 60, '#fff3c4', .6)}<circle r="36" fill="#fff8e6" stroke="#d7a84a" stroke-width="3"/><g transform="scale(.9)">${ICONS[ic]()}</g></g>`;
 }
 function cardSVG(seg, T) {
   const c = seg.card; if (!c) return '';
@@ -127,10 +128,14 @@ function cardSVG(seg, T) {
     s += `<text x="288" y="${y0 + lines.length * 31 + 10}" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', serif" font-size="19" letter-spacing="2" fill="#f3e6c8" stroke="#2a1a00" stroke-width="3" paint-order="stroke">${esc(c.ref)}</text>`;
     return shade + `<g opacity="${f1(k)}" transform="translate(0,${f1((1 - k) * -10)})">${s}</g>`;
   }
-  const lines = wrapLines(c.impact, 16);
+  // frase de impacto: fonte de destaque (Cinzel Black), dourado com contorno e ornamentos
+  const lines = wrapLines(c.impact, 15);
   const sc = pop((T - seg.s - .2) / .45);
-  let s = lines.map((l, i) => `<text x="0" y="${i * 50}" text-anchor="middle" font-family="Liberation Sans, Arial, sans-serif" font-weight="bold" font-size="44" stroke="#000" stroke-width="7" stroke-linejoin="round" paint-order="stroke">${l.split(' ').map(w => /\*/.test(w) ? `<tspan fill="${GOLD}">${esc(w.replace(/\*/g, ''))}</tspan>` : `<tspan fill="#fff">${esc(w)}</tspan>`).join(' ')}</text>`).join('');
-  return shade + `<g transform="translate(288,${230 - (lines.length - 1) * 25}) scale(${f1(sc)})">${s}</g>`;
+  const gold = def('impG', '<linearGradient id="impG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#ffd84d"/><stop offset="1" stop-color="#d79a20"/></linearGradient>');
+  const LH = 52, hh = (lines.length - 1) * LH;
+  let s = lines.map((l, i) => `<text x="0" y="${i * LH}" text-anchor="middle" font-family="Cinzel, 'Liberation Serif', serif" font-weight="900" font-size="40" stroke="#1a0d00" stroke-width="8" stroke-linejoin="round" paint-order="stroke" filter="url(#tsh)">${l.split(' ').map(w => /\*/.test(w) ? `<tspan fill="${gold}">${esc(w.replace(/\*/g, ''))}</tspan>` : `<tspan fill="#fffaf0">${esc(w)}</tspan>`).join(' ')}</text>`).join('');
+  const orn = y => `<g transform="translate(0,${y})"><line x1="-120" y1="0" x2="-22" y2="0" stroke="#ffd84d" stroke-width="2"/><line x1="22" y1="0" x2="120" y2="0" stroke="#ffd84d" stroke-width="2"/>${starShape(0, 0, 9, '#ffd84d')}</g>`;
+  return shade + `<g transform="translate(288,${235 - hh / 2}) scale(${f1(sc)})">${orn(-48)}${s}${orn(hh + 26)}</g>`;
 }
 // Transição de parte: quadro com os 5 símbolos (o da vez em destaque) + título centralizado no topo
 const PART_ICONS = ['star', 'steps', 'hebrew', 'eye', 'fur'];
@@ -167,7 +172,8 @@ function frameSVG(TL, T, opts = {}) {
   if (seg) {
     ov += cardSVG(seg, T) + bannerSVG(seg, T);
     const ch = seg.chunks.find(c => T >= c.s && T < c.e) || (T >= seg.e ? null : null);
-    if (ch) { ov += iconBadge(ch, T); ov += subtitleSVG(ch, T); }
+    ov += iconBadge(seg, T);
+    if (ch) ov += subtitleSVG(ch, T);
   }
   const fadeIn = clamp(T / .6, 0, 1), fadeOut = clamp((total - T) / .8, 0, 1);
   const vign = `<defs><radialGradient id="vg" cx=".5" cy=".45" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient><filter id="blur"><feGaussianBlur stdDeviation="5"/></filter><filter id="gray"><feColorMatrix type="saturate" values="0"/></filter><filter id="tsh" x="-20%" y="-40%" width="140%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000" flood-opacity=".8"/></filter></defs>`;
