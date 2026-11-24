@@ -46,10 +46,17 @@ function buildTimeline(mode, timings) {
     let start = T;
     if (timings && timings[i]) { start = timings[i][0]; dur = timings[i][1] - timings[i][0]; }
     const chunks = chunkText(txt); const tot = chunks.reduce((a, c) => a + c.length + 4, 0);
-    let ct = start; const cs = chunks.map(c => { const d = dur * (c.length + 4) / tot; const o = { text: c, s: ct, e: ct + d, kw: findKeyword(c) }; ct += d; return o; });
+    let ct = start; let cs = chunks.map(c => { const d = dur * (c.length + 4) / tot; const o = { text: c, s: ct, e: ct + d, kw: findKeyword(c) }; ct += d; return o; });
+    // tempos reais de cada trecho de legenda (alinhamento forçado com a voz)
+    const tc = timings && timings[i] && timings[i][2];
+    if (tc && tc.length === cs.length) cs = cs.map((c, k) => ({ ...c, s: tc[k][0], e: k < cs.length - 1 ? Math.max(tc[k][1], tc[k + 1][0] - .02) : tc[k][1] }));
     // trecho citado entre aspas (fala de um personagem): a boca dele mexe só aí
     let q = null; const q1 = e.t.indexOf('"'), q2 = e.t.lastIndexOf('"');
-    if (q1 >= 0 && q2 > q1) { const L = txt.length || 1; q = [start + dur * q1 / L, start + dur * Math.min(1, (q2 - 1) / L)]; }
+    if (q1 >= 0 && q2 > q1) {
+      // char → tempo pelos trechos já alinhados
+      const tAt = ch => { let acc = 0; for (const c of cs) { const L = c.text.length + 1; if (ch <= acc + L) return c.s + (c.e - c.s) * (ch - acc) / L; acc += L; } return cs[cs.length - 1].e; };
+      q = [tAt(q1), tAt(q2 - 1)];
+    }
     segs.push({ ...e, s: start, e: start + dur, chunks: cs, i, q });
     T = start + dur + GAP;
   });

@@ -74,3 +74,8 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   `tools/alinhar.py` (alinha cada fala ligando as pausas da voz à pontuação do texto) → `tools/mixar.sh`
   (voz -16 LUFS, trilha com ducking, saída -14 LUFS).
 - Com o pedido de ritmo ágil a Sadaltager fala ~16,6 caracteres/s: um roteiro de ~9.800 caracteres dá ~10min40s.
+- **Sincronia (correção séria do usuário: áudio, legendas e imagens TUDO alinhado)**: cada trecho de legenda é
+  alinhado à voz por alinhamento forçado (`tools/forcado.py`: espeak-ng fala cada trecho + DTW em MFCC com a
+  narração). O render (`tools/render_tudo.sh`) SEMPRE remonta a página e roda `tools/conferir.py` antes; se a
+  conferência falhar, não renderiza. Erro que aconteceu: render feito com a página montada antes do último
+  alinhamento.

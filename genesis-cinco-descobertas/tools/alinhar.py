@@ -2,6 +2,8 @@
 uso: python3 tools/alinhar.py <pasta_narracao_final> <timeline_full.json>
 Saídas: src/timings.js (tempos de cada fala por modo) e narração montada para o vídeo completo e cada Short."""
 import json, re, subprocess, sys, pathlib, wave, numpy as np
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from forcado import forced_group
 
 ND = pathlib.Path(sys.argv[1]); TL = json.load(open(sys.argv[2])); ROOT = pathlib.Path(__file__).resolve().parent.parent
 SR = 48000
@@ -103,11 +105,13 @@ def align(x, lines):
 # ---------- vídeo completo ----------
 groups = ['g1', 'g2', 'g3', 'g4', 'g5']
 full = [np.zeros(int(LEAD * SR))]; t = LEAD; T_full = []; audio_line = []  # audio_line: (amostra_ini, amostra_fim) de cada fala
+segs = TL['segs']; si = 0
 for g in groups:
     x = load(ND / f'{g}.wav'); lines = json.load(open(ND / f'{g}.json'))
-    al = align(x, lines)
-    for (a, b) in al:
-        T_full.append([round(t + a, 3), round(t + b, 3)]); audio_line.append((g, a, b))
+    chunks = [[c['text'] for c in segs[si + k]['chunks']] for k in range(len(lines))]
+    al, _, _ = forced_group(ND / f'{g}.wav', chunks); si += len(lines)
+    for (a, b, cs) in al:
+        T_full.append([round(t + a, 3), round(t + b, 3), [[round(t + u, 3), round(t + v, 3)] for u, v in cs]]); audio_line.append((g, a, b, cs))
     full.append(x); t += len(x) / SR + GAP_G; full.append(np.zeros(int(GAP_G * SR)))
 assert len(T_full) == len(TL['segs']), (len(T_full), len(TL['segs']))
 narr_full = np.concatenate(full)
@@ -115,7 +119,10 @@ save(narr_full, ND / 'narracao_full.wav')
 print('completo:', round(len(narr_full) / SR + TAIL, 1), 's')
 
 # ---------- Shorts: abertura + trecho da parte + chamada ----------
-ex = load(ND / 'extras.wav'); ex_lines = json.load(open(ND / 'extras.json')); ex_al = align(ex, ex_lines)
+ex = load(ND / 'extras.wav'); ex_lines = json.load(open(ND / 'extras.json'))
+TLD = pathlib.Path(sys.argv[3]) if len(sys.argv) > 3 else pathlib.Path(sys.argv[2]).parent
+ex_chunks = [json.load(open(TLD / f'tl_{n}.json'))['segs'][0]['chunks'] for n in (1, 2, 3, 4, 5)] + [json.load(open(TLD / 'tl_1.json'))['segs'][-1]['chunks']]
+ex_al, _, _ = forced_group(ND / 'extras.wav', [[c['text'] for c in ch] for ch in ex_chunks])
 gx = {g: load(ND / f'{g}.wav') for g in groups}
 secs = [s['sec'] for s in TL['segs']]
 timings = {'full': T_full}
@@ -124,12 +131,13 @@ for n in (1, 2, 3, 4, 5):
     idx = [i for i, s in enumerate(secs) if s == n][skip.get(n, 0):]
     g = audio_line[idx[0]][0]; assert all(audio_line[i][0] == g for i in idx)
     x = gx[g]; a0 = max(0, audio_line[idx[0]][1] - .05); b0 = audio_line[idx[-1]][2] + .08
-    oa, ob = ex_al[n - 1]; ca, cb = ex_al[5]
+    oa, ob, ocs = ex_al[n - 1]; ca, cb, ccs = ex_al[5]
     pieces = [np.zeros(int(.35 * SR)), ex[int(oa * SR):int(ob * SR)], np.zeros(int(.35 * SR)), x[int(a0 * SR):int(b0 * SR)], np.zeros(int(.45 * SR)), ex[int(ca * SR):int(cb * SR)]]
     y = np.concatenate(pieces)
-    T = [[.35, .35 + ob - oa]]; base = .35 + (ob - oa) + .35
-    for i in idx: T.append([round(base + audio_line[i][1] - a0, 3), round(base + audio_line[i][2] - a0, 3)])
-    cst = base + (b0 - a0) + .45; T.append([round(cst, 3), round(cst + cb - ca, 3)])
+    sh = lambda off, cs: [[round(off + u, 3), round(off + v, 3)] for u, v in cs]
+    T = [[.35, .35 + ob - oa, sh(.35 - oa, ocs)]]; base = .35 + (ob - oa) + .35
+    for i in idx: T.append([round(base + audio_line[i][1] - a0, 3), round(base + audio_line[i][2] - a0, 3), sh(base - a0, audio_line[i][3])])
+    cst = base + (b0 - a0) + .45; T.append([round(cst, 3), round(cst + cb - ca, 3), sh(cst - ca, ccs)])
     total = len(y) / SR + TAIL
     f = 1.0
     if total > MAX_SHORT:  # Shorts: ritmo um pouco mais ágil para caber em 2 min
@@ -137,7 +145,7 @@ for n in (1, 2, 3, 4, 5):
         tmp = ND / f'_s{n}.wav'; save(y, tmp)
         subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', str(tmp), '-af', f'atempo={f:.4f}', str(ND / f'_s{n}b.wav')], check=True)
         y = load(ND / f'_s{n}b.wav'); tmp.unlink(); (ND / f'_s{n}b.wav').unlink()
-        T = [[round(a / f, 3), round(b / f, 3)] for a, b in T]
+        T = [[round(a / f, 3), round(b / f, 3), [[round(u / f, 3), round(v / f, 3)] for u, v in cs]] for a, b, cs in T]
     save(y, ND / f'narracao_{n}.wav'); timings[str(n)] = T
     print(f'short {n}:', round(len(y) / SR + TAIL, 1), 's', f'(acelerado {f:.2f}x)' if f > 1 else '')
 
