@@ -64,3 +64,8 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   símbolos e personagens com expressão de surpresa.
 - Capítulos e legenda .srt (`tools/youtube.py`): refazer com os tempos da voz final.
 - Pendente (o usuário vai pedir em breve): versão horizontal 16:9 do vídeo longo.
+- Gemini TTS (aprendido nas amostras): no `gemini-3.8-flash-tts` a instrução de estilo é **lida em voz alta**; usar
+  `gemini-2.5-flash-preview-tts` (ou o Pro) com o formato "Leia em português do Brasil, com voz …: <texto>".
+  A cota gratuita é pequena (≈7–8 pedidos por dia por modelo): a narração final deve sair em poucos pedidos.
+  Ritmo medido nas amostras: ~14–15 caracteres/s (mais lento que a estimativa de 17); pedir ritmo ágil e, se
+  precisar, acelerar até ~8% para o vídeo caber em 10 min.
