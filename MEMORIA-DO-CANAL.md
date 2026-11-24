@@ -6,7 +6,7 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
 - **A voz só é gerada na versão final, depois que o vídeo for aprovado.** Antes disso, as prévias saem
   sem voz, com legendas e tempos estimados (≈14,5 caracteres por segundo). Nada de gastar créditos
   gerando voz em versões que ainda vão mudar.
-- Ferramenta de voz preferida: **Google AI Studio (Gemini TTS, gratuito)**. ElevenLabs só se o usuário pedir
+- **Voz padrão do canal: Sadaltager (Gemini TTS)**, em todos os vídeos e Shorts. Ferramenta: **Google AI Studio (Gemini TTS, gratuito)**. ElevenLabs só se o usuário pedir
   (a conta conectada é do plano gratuito, ~10 mil caracteres/mês, não dá para um vídeo longo).
 - Na versão final: o texto inteiro numa gravação só; as legendas são realinhadas pelo áudio real
   (ffmpeg silencedetect).
@@ -15,7 +15,7 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   `gemini-2.5-pro-preview-tts` e outros. Usar só na versão final aprovada.
 
 ## Duração
-- Vídeo completo: **no máximo 10 min**. Shorts: **entre 1 e 2 min**.
+- Vídeo completo: **no máximo 10 min, podendo chegar a 11 min** se a narração natural pedir (não acelerar a voz a ponto de soar corrida). Shorts: **entre 1 e 2 min**.
 - O corpo do roteiro do usuário não é alterado; para caber no tempo, encurtar gancho/fechamento, ritmo ágil de
   narração (~170 palavras/min), respiros curtos e títulos das partes só na tela (sem narração).
 - Shorts: a mesma voz ~6% mais rápida; se ainda passar de 2 min, a frase de abertura do corte pode substituir a
@@ -69,3 +69,8 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   A cota gratuita é pequena (≈7–8 pedidos por dia por modelo): a narração final deve sair em poucos pedidos.
   Ritmo medido nas amostras: ~14–15 caracteres/s (mais lento que a estimativa de 17); pedir ritmo ágil e, se
   precisar, acelerar até ~8% para o vídeo caber em 10 min.
+- Pipeline da voz final (Gênesis): `tools/narrar.py` (Gemini 2.5 Flash TTS, Sadaltager, estilo "ritmo ágil e
+  dinâmico", 5 pedidos por vídeo + 1 para as falas extras dos Shorts; cota grátis ≈ 10 pedidos/dia e ≈ 3/min) →
+  `tools/alinhar.py` (alinha cada fala ligando as pausas da voz à pontuação do texto) → `tools/mixar.sh`
+  (voz -16 LUFS, trilha com ducking, saída -14 LUFS).
+- Com o pedido de ritmo ágil a Sadaltager fala ~16,6 caracteres/s: um roteiro de ~9.800 caracteres dá ~10min40s.
