@@ -198,10 +198,19 @@ function arkAnimals(t, calm) {
   s += lionHead(-98, -110, .55, t, false, 1) + lionHead(-74, -108, .5, t, true, 2);
   s += `<g transform="translate(-50,-110)"><circle r="7.5" fill="${gRad('#9aa0a8')}"/><path d="M4 2 q6 6 3 12" stroke="#9aa0a8" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="2" cy="-2" r="1" fill="#111"/></g>`;
   s += `<g transform="translate(98,-110)"><ellipse cx="0" cy="0" rx="6" ry="7" fill="#f4f4f0"/><path d="M-4 -4 l8 0 M-4 0 l8 0 M-4 4 l8 0" stroke="#1b1b1b" stroke-width="1.6"/><circle cx="2" cy="-1" r="1" fill="#111"/></g>`;
-  // girafas pelo teto
+  s += `<g transform="translate(-124,-104)"><ellipse cx="0" cy="0" rx="7" ry="5" fill="#c89a5c"/><circle cx="-2" cy="-1" r="1" fill="#111"/><ellipse cx="3" cy="-5" rx="1.6" ry="2.6" fill="#a87a44"/></g>`;
+    // girafas pelo teto
   const nk = Math.sin(t * .8) * 3;
   s += `<path d="M84 -128 Q${f1(90 + nk)} -160 ${f1(92 + nk)} -190" stroke="#e8b452" stroke-width="9" fill="none" stroke-linecap="round"/><g transform="translate(${f1(94 + nk)},-196)"><ellipse cx="5" cy="2" rx="9" ry="5.5" fill="#e8b452"/><circle cx="3" cy="0" r="1.3" fill="#111"/><line x1="-1" y1="-4" x2="-2" y2="-11" stroke="#a8621f" stroke-width="2"/><line x1="4" y1="-4" x2="4" y2="-11" stroke="#a8621f" stroke-width="2"/></g>`;
   s += `<path d="M64 -128 Q${f1(68 - nk)} -152 ${f1(66 - nk)} -176" stroke="#e0a848" stroke-width="8" fill="none" stroke-linecap="round"/><g transform="translate(${f1(64 - nk)},-181)"><ellipse cx="-4" cy="2" rx="8" ry="5" fill="#e0a848"/><circle cx="-2" cy="0" r="1.2" fill="#111"/></g>`;
   if (calm) s += birdPerched(-30, -160, 1.2, '#3d7ac9', t) + birdPerched(-10, -164, 1.1, '#e0475b', t, 2) + birdPerched(110, -126, 1, '#f0c040', t, 4) + `<g transform="translate(-120,-128) scale(.6)">${sheep(0, 0, 1, t, 3)}</g>`;
   return s;
+}
+function camel(x, y, s, t, seed = 0, walk = 0) {
+  const c = gLin('#c89a5c', .15, -.25), ph = walk ? Math.sin(t * 3.5 * walk + seed) : 0, nk = Math.sin(t + seed) * 2;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="2" rx="34" ry="5" fill="#000" opacity=".16"/>${[[-18, ph], [-10, -ph], [12, -ph], [20, ph]].map(([k, q]) => `<rect x="${f1(k - 2.5 + q * 3)}" y="-50" width="5.5" height="50" rx="2" fill="${c}"/>`).join('')}<ellipse cx="0" cy="-58" rx="30" ry="14" fill="${c}"/><ellipse cx="-4" cy="-72" rx="14" ry="12" fill="${c}"/><path d="M24 -60 Q${f1(38 + nk)} -66 ${f1(36 + nk)} -86" stroke="#c89a5c" stroke-width="9" fill="none" stroke-linecap="round"/><g transform="translate(${f1(40 + nk)},-90)"><ellipse cx="4" cy="0" rx="10" ry="6" fill="${c}"/><circle cx="2" cy="-2" r="1.3" fill="#111"/><ellipse cx="-3" cy="-6" rx="2" ry="3" fill="#a87a44"/></g><path d="M-30 -58 q-6 8 -4 16" stroke="#a87a44" stroke-width="2.5" fill="none"/></g>`;
+}
+function ox(x, y, s, t, seed = 0, walk = 0) {
+  const c = gLin('#8a5a3a', .15, -.25), ph = walk ? Math.sin(t * 3 * walk + seed) : 0;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse cx="0" cy="2" rx="34" ry="5" fill="#000" opacity=".16"/>${[[-20, ph], [-11, -ph], [12, -ph], [21, ph]].map(([k, q]) => `<rect x="${f1(k - 3.5 + q * 3)}" y="-30" width="7.5" height="30" rx="3" fill="${c}"/>`).join('')}<ellipse cx="0" cy="-40" rx="32" ry="17" fill="${c}"/><ellipse cx="-8" cy="-34" rx="10" ry="7" fill="#f2eadc" opacity=".8"/><g transform="translate(32,-44)"><ellipse cx="4" cy="2" rx="11" ry="10" fill="${c}"/><ellipse cx="10" cy="8" rx="7" ry="5" fill="#c9a084"/><path d="M-4 -6 q-8 -6 -4 -12 M10 -6 q8 -6 4 -12" stroke="#efe6d2" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="6" cy="-1" r="1.4" fill="#111"/></g><path d="M-32 -42 q-6 10 -2 22" stroke="#6a4028" stroke-width="2.5" fill="none"/></g>`;
 }

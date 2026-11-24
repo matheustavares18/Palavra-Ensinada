@@ -136,8 +136,9 @@ function bannerSVG(seg, T) {
   const b = seg.banner; if (!b) return '';
   const lt = T - seg.s; if (lt > 3.2) return '';
   const k = easeOut(lt / .45) * (1 - easeOut((lt - 2.7) / .5));
-  const lines = wrapLines(b.name.toUpperCase(), 18);
-  return `<g opacity="${f1(k)}" transform="translate(288,${f1(300 + (1 - k) * 12)})" text-anchor="middle" font-family="Liberation Sans, Arial" font-weight="bold"><rect x="-200" y="-74" width="400" height="${92 + lines.length * 40}" rx="18" fill="#120a04" opacity=".72"/><rect x="-200" y="-74" width="400" height="${92 + lines.length * 40}" rx="18" fill="none" stroke="#d7a84a" stroke-width="2.5"/><text y="-36" font-size="22" letter-spacing="3" fill="#f3e6c8">${b.n}ª DESCOBERTA</text><text y="22" font-size="64" fill="#ffd84d" stroke="#3a2000" stroke-width="4" paint-order="stroke">${b.n}</text>${lines.map((l, i) => `<text y="${66 + i * 38}" font-size="31" fill="#fff">${l}</text>`).join('')}</g>`;
+  const lines = wrapLines(b.name.toUpperCase(), 22);
+  const h = 30 + lines.length * 30;
+  return `<g opacity="${f1(k)}" transform="translate(288,${f1(172 + (1 - k) * -10)})" font-family="Liberation Sans, Arial" font-weight="bold"><rect x="-215" y="0" width="430" height="${h}" rx="16" fill="#120a04" opacity=".7"/><rect x="-215" y="0" width="430" height="${h}" rx="16" fill="none" stroke="#d7a84a" stroke-width="2"/><circle cx="-172" cy="${h / 2}" r="26" fill="#d7a84a"/><text x="-172" y="${h / 2 + 12}" text-anchor="middle" font-size="34" fill="#2a1600">${b.n}</text><text x="-132" y="24" font-size="15" letter-spacing="2" fill="#f3e6c8">${b.n}ª DESCOBERTA</text>${lines.map((l, i) => `<text x="-132" y="${52 + i * 28}" font-size="25" fill="#ffd84d">${l}</text>`).join('')}</g>`;
 }
 function safeArea() {
   return `<g pointer-events="none"><rect x="0" y="0" width="576" height="154" fill="#ff0040" opacity=".25"/><rect x="0" y="665" width="576" height="359" fill="#ff0040" opacity=".25"/><rect x="474" y="154" width="102" height="511" fill="#ff0040" opacity=".25"/><rect x="0" y="154" width="34" height="511" fill="#ff0040" opacity=".25"/><rect x="34" y="154" width="440" height="511" fill="none" stroke="#ff0040" stroke-width="2" stroke-dasharray="6 6"/></g>`;

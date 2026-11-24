@@ -175,14 +175,16 @@ S.arkBoard = (t, p) => {
   s += `<g transform="translate(330,640) scale(1.05)">${ark(0, 0, 1, 0, 0, { animals: 0 }).replace(/^<g transform="[^"]*">/, '<g>')}</g>`;
   s += `<path d="M376 560 L120 760 L150 772 L400 590Z" fill="${gVert('#8b5a2b', .15, -.25)}"/>${[...Array(9)].map((_, i) => `<line x1="${f1(372 - i * 28)}" y1="${f1(566 + i * 21.5)}" x2="${f1(394 - i * 28)}" y2="${f1(592 + i * 20)}" stroke="#5a3a1c" stroke-width="1.6"/>`).join('')}`;
   // fila de pares subindo a rampa
-  const pairs = [['lion', 0], ['lion', 1], ['ele', 0], ['ele', 1], ['gir', 0], ['gir', 1], ['zeb', 0], ['zeb', 1], ['sheep', 0], ['sheep', 1]];
+  const pairs = [['lion', 0], ['lion', 1], ['ele', 0], ['ele', 1], ['gir', 0], ['gir', 1], ['zeb', 0], ['zeb', 1], ['cam', 0], ['cam', 1], ['ox', 0], ['ox', 1], ['sheep', 0], ['sheep', 1]];
   pairs.forEach(([k, j], i) => {
-    const u = ((t * .045) + (pairs.length - i) * .085) % 1;
-    const x = 40 + u * 330 + j * 18, y = 800 - u * 230 + j * 8, sc2 = .55 - u * .15, op = u > .9 ? (1 - u) * 10 : 1;
-    const g = k === 'lion' ? lion(0, 0, 1, t, j === 1, i, 1) : k === 'ele' ? elephant(0, 0, .9, t, i, 1) : k === 'gir' ? giraffe(0, 0, .8, t, i, 1) : k === 'zeb' ? zebra(0, 0, 1, t, i, 1) : sheep(0, 0, 1.1, t, i);
+    const u = ((t * .045) + (pairs.length - i) * .065) % 1;
+    const x = 40 + u * 330 + j * 18, y = 800 - u * 230 + j * 8, sc2 = .78 - u * .22, op = u > .9 ? (1 - u) * 10 : 1;
+    const g = k === 'lion' ? lion(0, 0, 1, t, j === 1, i, 1) : k === 'ele' ? elephant(0, 0, .9, t, i, 1) : k === 'gir' ? giraffe(0, 0, .8, t, i, 1) : k === 'zeb' ? zebra(0, 0, 1, t, i, 1) : k === 'cam' ? camel(0, 0, .85, t, i, 1) : k === 'ox' ? ox(0, 0, .9, t, i, 1) : sheep(0, 0, 1.1, t, i);
     s += `<g transform="translate(${f1(x)},${f1(y)}) scale(${f1(sc2)})" opacity="${f1(op)}">${g}</g>`;
   });
   s += birds(t, 6, 3, 220, '#3a3a4a') + flowers(t, 830, 16, 6, -50, 300) + grassTufts(t, 860, 30, 2);
+  s += [[60, 900, 'r'], [100, 905, 'r'], [520, 920, 'd'], [-10, 820, 'd']].map(([x, y, k], i) => k === 'r' ? rabbit(x, y, 1, t, i) : deer(x, y, .55, t, i)).join('');
+  s += birdPerched(250, 850, 1.3, '#e0475b', t, 1) + birdPerched(270, 852, 1.3, '#e0475b', t, 2);
   s += person({ who: 'noe', x: 470, y: 860, s: 1.2, t, look: -1, pose: 'open', emo: 'happy', staff: 0 });
   return { svg: s, first: 0, shots: [WIDE, { fx: 200, fy: 650, z: 1.5, sy: 470 }, FACE(470, 860), { fx: 300, fy: 560, z: 1.3, sy: 460 }] };
 };
@@ -216,9 +218,11 @@ S.nile = (t, p) => {
   if (p.miriam) s += person({ who: 'povo4', x: 520, y: 700, s: .72, t, look: -1, pose: 'chest', emo: 'worried', h: .8 });
   const bx = p.float ? 300 + Math.sin(t * .3) * 30 : 330;
   if (p.mother) s += person({ who: 'joquebede', x: 200, y: 820, s: 1.2, t, look: .8, lookY: .6, pose: p.release ? 'offer' : 'hold', emo: p.emo || (p.release ? 'cry' : 'worried') });
+  if (p.glowB) { const k = easeOut(t / 2); s += `<path d="M${bx - 50} -300 L${bx + 50} -300 L${bx + 95} 780 L${bx - 95} 780Z" fill="#fff6d2" opacity="${f1(.3 * k)}"/>` + glow(bx, 750, 150 * k, '#fff3c4', .85) + motes(t, 16, 5, '#fff6cf', bx - 90, bx + 90, 400, 780); }
   s += basket(bx, p.mother ? 790 : 760, 1.4, t);
   s += reeds(t, 230, 420, 880, 12, 11, 110);
-  return { svg: s, shots: [WIDE, { fx: bx, fy: 740, z: 1.9, sy: 440 }, FACE(200, 820), { fx: 288, fy: 600, z: 1.25, sy: 470 }] };
+  const shots = p.mother ? [WIDE, { fx: bx, fy: 740, z: 1.9, sy: 440 }, FACE(200, 820), { fx: 288, fy: 600, z: 1.25, sy: 470 }] : [WIDE, { fx: bx, fy: 740, z: 1.9, sy: 440 }, { fx: 288, fy: 600, z: 1.25, sy: 470 }, { fx: 460, fy: 560, z: 1.5, sy: 420 }];
+  return { svg: s, first: p.wide ? 0 : undefined, shots };
 };
 
 S.exodusCrowd = (t, p) => {

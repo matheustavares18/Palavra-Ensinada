@@ -81,8 +81,8 @@ L('E existe algo ainda mais interessante: em Gênesis, depois de toda a tragédi
 L('Já em Êxodo, embora o relato não diga expressamente que Deus interveio naquele exato momento, sabemos, pelo desenrolar da história, que aquele bebê seria preservado para se tornar o instrumento de Deus na libertação de Israel.', 'nile', { float: 1, miriam: 1 });
 L('Perceba a dimensão disso: aquele que seria usado para conduzir uma nação inteira para fora do Egito', 'exodusCrowd', {});
 L('começou sua história dentro de um pequeno cesto, à margem de um rio.', 'nile', { float: 1, k: 2 });
-L('Isso nos ensina que nem sempre conseguimos enxergar a dimensão daquilo que Deus está fazendo a partir das circunstâncias que estamos vivendo.', 'tinyBig', {});
-L('Às vezes, aquilo que parece pequeno aos nossos olhos está inserido em algo muito maior do que conseguimos imaginar.', 'tinyBig', { k: 2 });
+L('Isso nos ensina que nem sempre conseguimos enxergar a dimensão daquilo que Deus está fazendo a partir das circunstâncias que estamos vivendo.', 'nile', { float: 1, palace: 1, wide: 1, miriam: 1 });
+L('Às vezes, aquilo que parece pequeno aos nossos olhos está inserido em algo muito maior do que conseguimos imaginar.', 'nile', { float: 1, glowB: 1, palace: 1 });
 L('Deus não precisa de grandes cenários para realizar grandes propósitos.', 'nile', { float: 1, k: 3 }, { impact: 'Pequenos começos, *grandes* propósitos.' });
 
 // ---------- 4. A SERVA QUE FOI VISTA ----------

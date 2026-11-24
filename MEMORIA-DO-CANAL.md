@@ -42,3 +42,8 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   mãos e braços nas capturas antes de entregar.
 - Enoque: sempre com um brilho suave envolvendo o corpo (andar com Deus).
 - Arca de Noé: animais aparentes (leões, elefante, girafas, zebra, aves, ovelhas); entrada dos animais aos pares.
+- Fidelidade também na imagem: o cesto de Moisés fica **sempre à beira do rio, entre os juncos** (Êx 2:3), nunca
+  num jardim. Cenas de aplicação reaproveitam o cenário bíblico da história, sem inventar outro lugar.
+- Valorizar sempre a parte ilustrativa: muitos animais e detalhes (na arca: leões, girafas, zebras, elefantes,
+  camelos, bois, ovelhas, aves…).
+- Título de cada descoberta: faixa compacta no topo, sem cobrir a cena principal.
