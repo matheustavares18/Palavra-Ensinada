@@ -46,4 +46,5 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   num jardim. Cenas de aplicação reaproveitam o cenário bíblico da história, sem inventar outro lugar.
 - Valorizar sempre a parte ilustrativa: muitos animais e detalhes (na arca: leões, girafas, zebras, elefantes,
   camelos, bois, ovelhas, aves…).
-- Título de cada descoberta: faixa compacta no topo, sem cobrir a cena principal.
+- Transição de parte: quadro **centralizado no topo** com os 5 símbolos das descobertas (o da vez em destaque,
+  claro e dourado; os anteriores com ✓; os próximos apagados), "Nª DESCOBERTA" e o título embaixo.
