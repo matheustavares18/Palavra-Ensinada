@@ -7,7 +7,7 @@ SR = 32000
 rng = np.random.default_rng(7)
 
 def env_ar(n, a, r):
-    e = np.ones(n); a = int(a * SR); r = int(r * SR)
+    e = np.ones(n); a = min(int(a * SR), n // 2); r = min(int(r * SR), n // 2)
     if a: e[:a] = np.linspace(0, 1, a)
     if r: e[-r:] *= np.linspace(1, 0, r)
     return e
