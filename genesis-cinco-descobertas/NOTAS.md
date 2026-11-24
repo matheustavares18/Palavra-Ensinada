@@ -1,18 +1,19 @@
 # Gênesis: 5 coisas que você talvez nunca percebeu
 
-Versão de prévia **sem voz**: a narração só será gerada quando esta versão for aprovada (regra do canal).
-Os tempos das legendas são estimados (≈14,5 caracteres/s). O vídeo completo dá **cerca de 13 min** com esse ritmo,
-acima da meta de 5 a 10 min. Se quiser encurtar, os trechos mais longos são as aplicações das partes 2 e 5.
+Versão 2, **sem voz**: a narração só será gerada quando esta versão for aprovada (regra do canal).
+Tempos estimados para um ritmo ágil de narrador (~170 palavras/min): **vídeo completo 9:43**, Shorts de 1:40 a 1:54.
+O corpo do roteiro (as 5 partes) está exatamente como foi enviado. Mudaram só o gancho (mais curto e provocativo)
+e o fechamento (padrão do canal, sem falar do próximo vídeo). Os títulos das partes agora aparecem só na tela.
 
 ## Arquivos
 - `previa.html`: prévia animada (576×1024), com seletor Vídeo completo / Shorts 1–5, botão "Carregar narração (mp3)" e a área segura sobreposta.
-- `video/*-SEM-VOZ.mp4`: vídeo completo e 5 cortes verticais, 720×1280, 24 fps, sem áudio.
-- `roteiro.txt`: texto de narração em uma gravação só (inclui "Primeira descoberta: …" etc. lidos em voz alta, no lugar dos títulos numerados).
+- `video/*-v2-SEM-VOZ.mp4`: vídeo completo e 5 cortes verticais, 1080×1920, 24 fps, sem áudio.
+- `roteiro.txt`: texto da narração do vídeo completo (uma gravação só). `roteiro-shorts.txt`: texto de cada corte.
 - `src/`: código das cenas (`scenes.js`), personagens (`person.js`), roteiro → cenas (`timeline.js`).
 - Para montar de novo: `python3 build.py`.
 
 ## Conferência bíblica (para você checar)
-| Na tela | Referência | Versão | Observação |
+| Passagem (o narrador fala; na tela só a referência) | Referência | Versão | Observação |
 |---|---|---|---|
 | "Fez Deus os dois grandes luzeiros: o maior para governar o dia, e o menor para governar a noite; e fez também as estrelas." | Gn 1:16 | ARA | Conferir pontuação |
 | "Quando contemplo os teus céus… que é o homem, que dele te lembres?" | Sl 8:3-4 | ARA | |
@@ -29,18 +30,21 @@ acima da meta de 5 a 10 min. Se quiser encurtar, os trechos mais longos são as 
 | "Fez o SENHOR Deus vestimenta de peles para Adão e sua mulher e os vestiu." | Gn 3:21 | ARA | |
 | "Eis o Cordeiro de Deus, que tira o pecado do mundo!" | Jo 1:29 | ARA | |
 
+| Gancho: "Um homem que foi tomado por Deus, sem o registro de sua morte." | Gn 5:24; Hb 11:5 | — | Gn 5 não traz "e morreu" para Enoque |
+| Gancho: "um gesto de Deus… que antecipa algo revelado só no Novo Testamento" | Gn 3:21 | — | Mesma ideia do seu roteiro original |
+
 **Fidelidade**: o roteiro já separa bem o que o texto diz do que é interpretação ("Gênesis não explica…",
 "embora o relato não diga expressamente…"). O Anjo do Senhor aparece como um homem de branco com luz suave, sem asas.
 Deus não é desenhado: na cena das peles aparece só um facho de luz.
 
 ## Cortes (Shorts/TikTok): abertura própria + chamada no final
-1. "Uma única frase da Bíblia fala de bilhões de estrelas."
+1. "Uma única frase da Bíblia esconde bilhões de estrelas."
 2. "Na lista mais repetitiva da Bíblia, um homem quebra o padrão."
 3. "A arca de Noé e o cesto de Moisés têm a mesma palavra em hebraico."
 4. "Uma serva estrangeira, sozinha no deserto, deu um nome a Deus."
-5. "Depois do primeiro pecado, Deus fez roupas. E esse detalhe diz muito."
+5. "Depois do primeiro pecado, Deus fez roupas. E isso diz muito." (substitui a 1ª frase da parte 5 só no corte, para caber em 2 min)
 
-Todos terminam com: "Essa é uma das cinco descobertas em Gênesis. Assista ao vídeo completo no canal Palavra Ensinada."
+Todos terminam com: "Vídeo completo no canal Palavra Ensinada."
 
 ## Publicação
 **Título (YouTube):** 5 coisas que você talvez nunca percebeu em GÊNESIS
@@ -54,6 +58,5 @@ Você já leu Gênesis, talvez várias vezes. Mas já percebeu estes detalhes?
 🐑 As vestes de pele e o Cordeiro de Deus (Gn 3:21; Jo 1:29)
 
 Qual dessas descobertas você nunca tinha percebido? Conta aqui nos comentários.
-Próximo vídeo: Êxodo.
 
 **Hashtags:** #Bíblia #Gênesis #PalavraEnsinada #CuriosidadesBíblicas #EstudoBíblico #Fé #Jesus #Shorts
