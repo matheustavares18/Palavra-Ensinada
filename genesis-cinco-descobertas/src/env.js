@@ -2,12 +2,12 @@
 function sky(id, stops) {
   id = id + stops.map(x => hid(x[1])).join('');
   return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient></defs>
-  <rect x="-400" y="-400" width="${W + 800}" height="${H + 800}" fill="url(#${id})"/>`;
+  <rect x="-1100" y="-400" width="${W + 2200}" height="${H + 800}" fill="url(#${id})"/>`;
 }
 function haze(y, col = '#ffffff', op = .45, h = 160) {
   const id = 'hz' + hid(col) + Math.round(op * 100);
   def(id, `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity="0"/><stop offset=".6" stop-color="${col}" stop-opacity="${op}"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient>`);
-  return `<rect x="-400" y="${y - h}" width="${W + 800}" height="${h * 1.4}" fill="url(#${id})"/>`;
+  return `<rect x="-1100" y="${y - h}" width="${W + 2200}" height="${h * 1.4}" fill="url(#${id})"/>`;
 }
 function motes(t, n, seed, col = '#fff6cf', x0 = -50, x1 = 620, y0 = 100, y1 = 900) {
   let s = '';
@@ -20,30 +20,30 @@ function motes(t, n, seed, col = '#fff6cf', x0 = -50, x1 = 620, y0 = 100, y1 = 9
 }
 function hills(y, cols, seed = 1, opts = {}) {
   return cols.map((c, i) => {
-    const yy = y + i * 80; let d = `M-400 ${yy + 80}`;
-    for (let x = -400; x <= W + 400; x += 30) d += ` L${x} ${f1(yy + Math.sin(x * 0.005 + i * 2 + seed) * 50 + Math.sin(x * 0.013 + i + seed) * 18)}`;
-    let s = `<path d="${d} L${W + 400} ${H + 600} L-400 ${H + 600}Z" fill="${gVert(c, .14, -.22)}"/>`;
+    const yy = y + i * 80; let d = `M-1100 ${yy + 80}`;
+    for (let x = -1100; x <= W + 1100; x += 30) d += ` L${x} ${f1(yy + Math.sin(x * 0.005 + i * 2 + seed) * 50 + Math.sin(x * 0.013 + i + seed) * 18)}`;
+    let s = `<path d="${d} L${W + 1100} ${H + 600} L-1100 ${H + 600}Z" fill="${gVert(c, .14, -.22)}"/>`;
     // borda iluminada
     s += `<path d="${d}" stroke="${shade(c, .25)}" stroke-width="3" fill="none" opacity=".5"/>`;
-    if (i === cols.length - 1 && !opts.bare) for (let k = 0; k < 40; k++) { const x = -300 + rnd(seed * 9 + k) * 1200, y2 = yy + 60 + rnd(k * 3 + seed) * 300; s += `<path d="M${f1(x)} ${f1(y2)} l-3 -9 M${f1(x + 4)} ${f1(y2)} l1 -11 M${f1(x + 8)} ${f1(y2)} l3 -8" stroke="${shade(c, -.25)}" stroke-width="1.6" opacity=".55"/>`; }
+    if (i === cols.length - 1 && !opts.bare) for (let k = 0; k < 110; k++) { const x = -1000 + rnd(seed * 9 + k) * 2600, y2 = yy + 60 + rnd(k * 3 + seed) * 300; s += `<path d="M${f1(x)} ${f1(y2)} l-3 -9 M${f1(x + 4)} ${f1(y2)} l1 -11 M${f1(x + 8)} ${f1(y2)} l3 -8" stroke="${shade(c, -.25)}" stroke-width="1.6" opacity=".55"/>`; }
     return s;
   }).join('');
 }
 function dunes(t, y, cols) {
   return cols.map((c, i) => {
-    const yy = y + i * 70; let d = `M-400 ${yy + 60}`, ridge = '';
-    for (let x = -400; x <= W + 400; x += 30) { const yv = yy + Math.sin(x * 0.006 + i * 2) * 40 + Math.sin(x * 0.017 + i) * 12; d += ` L${x} ${f1(yv)}`; }
-    let s = `<path d="${d} L${W + 400} ${H + 600} L-400 ${H + 600}Z" fill="${gVert(c, .12, -.2)}"/><path d="${d}" stroke="${shade(c, .35)}" stroke-width="2.5" fill="none" opacity=".7"/>`;
+    const yy = y + i * 70; let d = `M-1100 ${yy + 60}`, ridge = '';
+    for (let x = -1100; x <= W + 1100; x += 30) { const yv = yy + Math.sin(x * 0.006 + i * 2) * 40 + Math.sin(x * 0.017 + i) * 12; d += ` L${x} ${f1(yv)}`; }
+    let s = `<path d="${d} L${W + 1100} ${H + 600} L-1100 ${H + 600}Z" fill="${gVert(c, .12, -.2)}"/><path d="${d}" stroke="${shade(c, .35)}" stroke-width="2.5" fill="none" opacity=".7"/>`;
     // ondulações do vento
     for (let k = 0; k < 6; k++) { const x = -200 + rnd(i * 13 + k) * 900, y2 = yy + 40 + rnd(k + i) * 50; s += `<path d="M${f1(x)} ${f1(y2)} q20 -5 40 0 t40 0" stroke="${shade(c, -.15)}" stroke-width="1.5" fill="none" opacity=".5"/>`; }
     return s;
   }).join('');
 }
 function water(t, y, col1, col2, amp = 6, sp = 1, extra = '') {
-  let s = `<rect x="-400" y="${y}" width="${W + 800}" height="${H + 600}" fill="${gVert(col1, .12, -.35)}"/>`;
+  let s = `<rect x="-1100" y="${y}" width="${W + 2200}" height="${H + 600}" fill="${gVert(col1, .12, -.35)}"/>`;
   for (let k = 0; k < 7; k++) {
     let d = ''; const yy = y + k * 26 + 6;
-    for (let x = -400; x <= W + 400; x += 22) d += (x === -400 ? 'M' : 'L') + x + ' ' + f1(yy + Math.sin(x * 0.03 + t * 1.6 * sp + k) * amp * (1 - k * .08));
+    for (let x = -1100; x <= W + 1100; x += 22) d += (x === -1100 ? 'M' : 'L') + x + ' ' + f1(yy + Math.sin(x * 0.03 + t * 1.6 * sp + k) * amp * (1 - k * .08));
     s += `<path d="${d}" stroke="${col2}" stroke-width="${f1(3 - k * .3)}" fill="none" opacity="${f1(.7 - k * .07)}"/>`;
   }
   for (let i = 0; i < 22; i++) { const x = rnd(i * 5) * 700 - 60, yy = y + 10 + rnd(i * 9) * 200, tw = Math.max(0, Math.sin(t * 2.2 + i * 1.7)); s += `<path d="M${f1(x - 5 * tw)} ${f1(yy)} L${f1(x + 5 * tw)} ${f1(yy)} M${f1(x)} ${f1(yy - 3 * tw)} L${f1(x)} ${f1(yy + 3 * tw)}" stroke="#fff" stroke-width="1.4" opacity="${f1(tw * .8)}"/>`; }
@@ -150,9 +150,9 @@ function pyramid(x, y, s, col = '#d8b46a') {
   return `<g transform="translate(${x},${y}) scale(${s})"><path d="M-120 0 L0 -110 L120 0Z" fill="${col}"/><path d="M0 -110 L120 0 L30 0Z" fill="${shade(col, -0.2)}"/>${[1, 2, 3, 4, 5].map(k => `<line x1="${-120 + k * 20}" y1="${-k * 18}" x2="${120 - k * 20}" y2="${-k * 18}" stroke="${shade(col, -.12)}" stroke-width="1" opacity=".6"/>`).join('')}</g>`;
 }
 function mountains(y, col, seed = 1, h = 140) {
-  let d = `M-400 ${y}`;
-  for (let x = -400; x <= W + 400; x += 60) d += ` L${x} ${f1(y - h * (0.4 + 0.6 * Math.abs(Math.sin(x * .007 + seed))) - rnd(x + seed) * 30)}`;
-  return `<path d="${d} L${W + 400} ${y} L${W + 400} ${y + 600} L-400 ${y + 600}Z" fill="${gVert(col, .1, -.1)}"/>`;
+  let d = `M-1100 ${y}`;
+  for (let x = -1100; x <= W + 1100; x += 60) d += ` L${x} ${f1(y - h * (0.4 + 0.6 * Math.abs(Math.sin(x * .007 + seed))) - rnd(x + seed) * 30)}`;
+  return `<path d="${d} L${W + 1100} ${y} L${W + 1100} ${y + 600} L-1100 ${y + 600}Z" fill="${gVert(col, .1, -.1)}"/>`;
 }
 function lotus(x, y, s, t) {
   return `<g transform="translate(${f1(x)},${f1(y + Math.sin(t * 1.5 + x) * 1.5)}) scale(${s})"><ellipse cx="0" cy="2" rx="16" ry="5" fill="#3f7a3a"/>${[-2, -1, 0, 1, 2].map(k => `<ellipse cx="${k * 4}" cy="-5" rx="3.4" ry="8" fill="${gVert('#f6c6d8', .2, -.1)}" transform="rotate(${k * 22} ${k * 4} 0)"/>`).join('')}<circle cx="0" cy="-3" r="2.2" fill="#f2c23b"/></g>`;

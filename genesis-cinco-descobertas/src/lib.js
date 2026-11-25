@@ -18,9 +18,9 @@ let _uid = 0; const uid = p => p + (++_uid);
 
 // ===== Elementos de cenário vivos =====
 function starsField(t, n, seed, y0 = -300, y1 = 700, big = 1) {
-  let s = '';
+  let s = ''; n = Math.round(n * 2.19);
   for (let i = 0; i < n; i++) {
-    const x = -300 + rnd(seed + i) * (W + 600), y = y0 + rnd(seed + i * 3.7) * (y1 - y0);
+    const x = -1000 + rnd(seed + i) * (W + 2000), y = y0 + rnd(seed + i * 3.7) * (y1 - y0);
     const r = (0.6 + rnd(seed + i * 9.1) * 1.6) * big;
     const tw = 0.55 + 0.45 * Math.sin(t * (0.8 + rnd(i) * 1.5) + i);
     s += `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(r)}" fill="#fff" opacity="${f1(tw * 0.9)}"/>`;
@@ -33,20 +33,20 @@ function starShape(x, y, r, fill, rot = 0, op = 1) {
   return `<path d="${d}Z" fill="${fill}" opacity="${op}"/>`;
 }
 function clouds(t, y, n, seed, col = '#fff', op = .85, speed = 6, sc = 1) {
-  let s = '';
+  let s = ''; n = Math.round(n * 2.2);
   for (let i = 0; i < n; i++) {
     const w = (70 + rnd(seed + i) * 90) * sc;
-    let x = -250 + ((rnd(seed + i * 2) * (W + 500) + t * speed * (0.6 + rnd(i) * .8)) % (W + 500));
+    let x = -900 + ((rnd(seed + i * 2) * (W + 1800) + t * speed * (0.6 + rnd(i) * .8)) % (W + 1800));
     const yy = y + rnd(seed + i * 5) * 120;
     s += `<g opacity="${op}" fill="${col}"><ellipse cx="${f1(x)}" cy="${f1(yy)}" rx="${f1(w)}" ry="${f1(w * .32)}"/><ellipse cx="${f1(x - w * .35)}" cy="${f1(yy - w * .12)}" rx="${f1(w * .45)}" ry="${f1(w * .3)}"/><ellipse cx="${f1(x + w * .25)}" cy="${f1(yy - w * .2)}" rx="${f1(w * .5)}" ry="${f1(w * .38)}"/></g>`;
   }
   return s;
 }
 function birds(t, n, seed, y, col = '#2b2b3a', sc = 1) {
-  let s = '';
+  let s = ''; n = Math.round(n * 2.2);
   for (let i = 0; i < n; i++) {
     const sp = 22 + rnd(seed + i) * 20;
-    const x = -100 + ((rnd(seed + i * 3) * 900 + t * sp) % 900);
+    const x = -700 + ((rnd(seed + i * 3) * 2000 + t * sp) % 2000);
     const yy = y + rnd(seed + i * 7) * 140 + Math.sin(t * 1.3 + i) * 8;
     const fl = Math.sin(t * 9 + i * 2) * 5;
     const k = (0.7 + rnd(seed + i * 11) * .6) * sc;
@@ -65,8 +65,8 @@ function butterflies(t, n, seed, x0, y0, w, h) {
   }
   return s;
 }
-function grassTufts(t, y, n, seed, col = '#3f8a3a', x0 = -200, x1 = W + 200) {
-  let s = '';
+function grassTufts(t, y, n, seed, col = '#3f8a3a', x0 = -900, x1 = W + 900) {
+  let s = ''; n = Math.round(n * (x1 - x0) / (W + 400));
   for (let i = 0; i < n; i++) {
     const x = x0 + rnd(seed + i) * (x1 - x0), yy = y + rnd(seed + i * 4) * 30, h = 10 + rnd(i * 3 + seed) * 14;
     const sw = Math.sin(t * 1.8 + i) * 3;

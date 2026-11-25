@@ -8,7 +8,7 @@ const XFADE = 0.35;        // transição entre cenas
 const TAIL = 2.0;          // tela depois da última palavra
 // Formato: vertical (9:16, padrão) ou horizontal (16:9, ?orient=h) — mesma cena, enquadramento próprio
 const ORIENT = new URLSearchParams(location.search).get('orient') === 'h' ? 'h' : 'v';
-const VW = ORIENT === 'h' ? 1024 : 576, VH = ORIENT === 'h' ? 576 : 1024, CX = VW / 2;
+const VW = ORIENT === 'h' ? 1024 : 576, VH = ORIENT === 'h' ? 576 : 1024, CX = VW / 2, HS = 576 / 1024;
 // zoom base no horizontal: cenas compostas para a tela inteira mostram mais do mundo
 const SCENE_ZL = { themeTitle: .76, recap: .8, end: .76, attributes: .8, comment: .82, hebrew: .78, galaxy: .9, scroll: .76, bibleIntro: .86 };
 // horizontal: centro fixo (mundo) para cenas compostas para a tela inteira, e cenas cujo texto vai numa faixa fixa no topo
@@ -103,22 +103,10 @@ function renderScene(block, T) {
   const r = S[block.sc](lt, block.p);
   const oy = SCENE_OY[block.sc] ?? -90;
   const cam = camFor(block, lt, r.shots, r.first);
-  if (ORIENT === 'v') return `<g transform="${camTransform(cam, oy)}">${r.svg}</g>${r.ov || ''}`;
-  // horizontal: centro do quadro = mesmo ponto do mundo que o vertical centraliza
-  const z = cam.z, cx = cam.fx, cy = cam.fy + oy + (512 - cam.sy) / z;
-  const ccx = clamp(cx, 288 / z - 40, W - 288 / z + 40), ccy = clamp(cy, 512 / z - 40, H - 512 / z + 120);
-  const base = SCENE_ZL[block.sc];
-  // cenas compostas para a tela inteira: zoom do vertical atenuado, para não cortar o que está escrito
-  const zL = base ? base * (1 + (z - 1) * .2) : z, hw = 512 / zL, hh = 288 / zL;
-  let cxL = hw >= 688 ? 288 : clamp(ccx, -400 + hw, 976 - hw), cyL = clamp(ccy + 40 / z, -400 + oy + hh, 1424 + oy - hh);
-  const fixed = SCENE_CL[block.sc];
-  if (fixed) { cxL = fixed[0] + (ccx - 288) * .15; cyL = fixed[1] + oy + (ccy - 512 - oy) * .1; }
-  else if (zL < 1.5) cyL = Math.max(cyL, 850 + oy - hh);  // planos abertos: não cortar os personagens embaixo
-  const camL = `translate(512,288) scale(${f1(zL * 1000) / 1000}) translate(${f1(-cxL)},${f1(-cyL)})`;
-  const ov = !r.ov ? '' : SCENE_OVTOP[block.sc]
-    ? `<g transform="translate(${CX},0) scale(.74) translate(-288,-70)">${r.ov}</g>`
-    : `<g transform="${camL} translate(${f1(ccx)},${f1(ccy)}) scale(${f1(1000 / z) / 1000}) translate(-288,-512)">${r.ov}</g>`;
-  return `<g transform="${camL} translate(0,${oy})">${r.svg}</g>${ov}`;
+  const inner = `<g transform="${camTransform(cam, oy)}">${r.svg}</g>${r.ov || ''}`;
+  if (ORIENT === 'v') return inner;
+  // horizontal: o quadro vertical inteiro, exatamente igual, no centro (mesma altura); o cenário continua para os lados
+  return `<g transform="translate(${f1(512 - 288 * HS)},0) scale(${HS})">${inner}</g>`;
 }
 
 const GOLD = '#ffd84d';

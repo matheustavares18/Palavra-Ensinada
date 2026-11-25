@@ -6,8 +6,8 @@ const FACE = (x, feetY, s = 1.2, z = 1.85) => ({ fx: x, fy: feetY - 176 * s, z, 
 
 S.bibleIntro = (t, p) => {
   let s = sky('bi', [[0, '#1d1410'], [1, '#3a2418']]);
-  s += `<rect x="-400" y="640" width="1400" height="800" fill="${gVert('#6a4428', .1, -.35)}"/><rect x="-400" y="640" width="1400" height="8" fill="#8a6038"/>`;
-  for (let i = 0; i < 18; i++) s += `<path d="M-400 ${662 + i * 22} Q288 ${656 + i * 22} 1000 ${662 + i * 22}" stroke="#4a2f1a" stroke-width="1.6" fill="none" opacity=".6"/>`;
+  s += `<rect x="-1100" y="640" width="2800" height="800" fill="${gVert('#6a4428', .1, -.35)}"/><rect x="-1100" y="640" width="2800" height="8" fill="#8a6038"/>`;
+  for (let i = 0; i < 18; i++) s += `<path d="M-1100 ${662 + i * 22} Q288 ${656 + i * 22} 1700 ${662 + i * 22}" stroke="#4a2f1a" stroke-width="1.6" fill="none" opacity=".6"/>`;
   s += candle(90, 640, 1.2, t) + candle(480, 640, 1, t + 1);
   s += `<g transform="translate(470,636)"><path d="M-14 0 L-10 -30 L10 -30 L14 0Z" fill="${gLin('#3a2a1e')}"/><path d="M4 -28 Q30 -90 60 -120" stroke="#f3ead8" stroke-width="3" fill="none"/><path d="M40 -100 Q60 -128 64 -126 Q56 -100 40 -100Z" fill="#f3ead8"/></g>`;
   s += motes(t, 24, 3, '#ffe7a0', 40, 540, 120, 640);
@@ -47,15 +47,15 @@ S.stars = (t, p) => {
 };
 
 S.luminaries = (t, p) => {
-  let s = `<defs><linearGradient id="lmD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fa8f5"/><stop offset="1" stop-color="#d8f0ff"/></linearGradient><linearGradient id="lmN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070a26"/><stop offset="1" stop-color="#2b2f63"/></linearGradient><clipPath id="cN"><rect x="288" y="-400" width="700" height="1600"/></clipPath><clipPath id="cD"><rect x="-400" y="-400" width="688" height="1600"/></clipPath></defs>`;
-  s += `<rect x="-400" y="-400" width="688" height="1600" fill="url(#lmD)"/><rect x="288" y="-400" width="700" height="1600" fill="url(#lmN)"/>`;
+  let s = `<defs><linearGradient id="lmD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fa8f5"/><stop offset="1" stop-color="#d8f0ff"/></linearGradient><linearGradient id="lmN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070a26"/><stop offset="1" stop-color="#2b2f63"/></linearGradient><clipPath id="cN"><rect x="288" y="-400" width="1500" height="1600"/></clipPath><clipPath id="cD"><rect x="-1100" y="-400" width="1388" height="1600"/></clipPath></defs>`;
+  s += `<rect x="-1100" y="-400" width="1388" height="1600" fill="url(#lmD)"/><rect x="288" y="-400" width="1500" height="1600" fill="url(#lmN)"/>`;
   s += `<g clip-path="url(#cN)">${starsField(t, 90, 9, -300, 700)}</g><g clip-path="url(#cD)">${clouds(t, 120, 4, 2, '#fff', .9, 8, .8)}${birds(t, 4, 1, 380)}</g>`;
   const sy = 260 + Math.sin(t * .6) * 6;
   s += glow(150, sy, 180, '#fff2a8', .9) + rays(150, sy, 12, 130, '#ffd84d', .25, t) + `<circle cx="150" cy="${f1(sy)}" r="62" fill="${gRad('#ffc531', .3, -.1)}"/>`;
   s += glow(430, 270, 130, '#e9f0ff', .5) + `<circle cx="430" cy="270" r="40" fill="${gRad('#f3efd6', .1, -.2)}"/><circle cx="416" cy="258" r="7" fill="#d8d2b4"/><circle cx="440" cy="285" r="5" fill="#d8d2b4"/><circle cx="447" cy="255" r="4" fill="#d8d2b4"/>`;
   s += haze(640, '#ffffff', .3);
   s += hills(690, ['#5aa04a', '#3f8a3a', '#2e6e2c']);
-  s += `<rect x="288" y="600" width="700" height="800" fill="#0a0d2a" opacity=".5"/>`;
+  s += `<rect x="288" y="600" width="1500" height="800" fill="#0a0d2a" opacity=".5"/>`;
   s += sheep(120, 780, 1, t) + sheep(200, 800, .9, t, 2) + tree(60, 740, .8, t, 'round', 3) + tree(510, 750, .8, t, 'olive', 4) + flowers(t, 820, 10, 4, -50, 280);
   s += `<g transform="translate(470,640)"><ellipse cx="0" cy="0" rx="9" ry="12" fill="#6b5640"/><circle cx="0" cy="-12" r="8" fill="#7a6450"/><circle cx="-3" cy="-13" r="2.6" fill="#ffd84d"/><circle cx="3" cy="-13" r="2.6" fill="#ffd84d"/></g>`;
   let ov = '';
@@ -154,7 +154,7 @@ S.ark = (t, p) => {
   const calm = p.calm;
   let s = calm ? sky('ak', [[0, '#7ec4f2'], [1, '#e6f4ff']]) : sky('ak', [[0, '#1f2633'], [1, '#4d5b70']]);
   if (calm) s += glow(460, 160, 220, '#fff3c4', .9) + `<circle cx="460" cy="160" r="44" fill="${gRad('#ffd84d', .3)}"/>` + rays(460, 160, 14, 300, '#fff3c4', .12, t) + clouds(t, 90, 4, 3, '#fff', .9, 6);
-  else { s += clouds(t, 30, 7, 5, '#2e3644', .95, 12, 1.5) + clouds(t, 160, 5, 9, '#3b4454', .9, 16, 1.2); for (let i = 0; i < 110; i++) { const x = rnd(i) * 1000 - 200, y = ((rnd(i * 3) * 1100 + t * 620) % 1100) - 100; s += `<line x1="${f1(x)}" y1="${f1(y)}" x2="${f1(x - 6)}" y2="${f1(y + 24)}" stroke="#b8c7da" stroke-width="1.5" opacity=".5"/>`; } }
+  else { s += clouds(t, 30, 7, 5, '#2e3644', .95, 12, 1.5) + clouds(t, 160, 5, 9, '#3b4454', .9, 16, 1.2); for (let i = 0; i < 110; i++) { const x = rnd(i) * 1700 - 200, y = ((rnd(i * 3) * 1100 + t * 620) % 1100) - 100; s += `<line x1="${f1(x)}" y1="${f1(y)}" x2="${f1(x - 6)}" y2="${f1(y + 24)}" stroke="#b8c7da" stroke-width="1.5" opacity=".5"/>`; } }
   if (calm) s += `<path d="M-200 640 Q60 520 200 600 L320 640Z" fill="${gVert('#6b8f5a')}"/>`;
   s += ark(288, 650, 1.15, t, calm ? .4 : 1.2, { animals: 1, calm });
   if (p.noah) s += `<g transform="translate(288,${f1(650 + Math.sin(t * 1.4) * 4 * (calm ? .4 : 1.2))}) rotate(${f1(Math.sin(t * 1.1) * 2.5 * (calm ? .4 : 1.2))}) scale(1.15)"><clipPath id="nw"><rect x="-26" y="-118" width="46" height="42"/></clipPath><rect x="-26" y="-118" width="46" height="42" fill="#1a0f05"/><g clip-path="url(#nw)">${person({ who: 'noe', x: -3, y: -12, s: .5, t, look: .5, pose: calm ? 'raise' : 'pray', staff: 0, emo: p.emo || (calm ? 'joy' : 'worried') })}</g><rect x="-26" y="-118" width="46" height="42" fill="none" stroke="#4a2e14" stroke-width="3"/></g>`;
@@ -196,7 +196,7 @@ S.hebrew = (t, p) => {
   s += glow(288, 300, 220, '#ffe7a0', .5 * k);
   s += `<g text-anchor="middle" opacity="${f1(k)}"><text x="288" y="${f1(330 - (1 - k) * 30)}" font-family="DejaVu Sans, sans-serif" font-size="120" font-weight="bold" fill="#ffd84d" stroke="#5a3a00" stroke-width="3" paint-order="stroke">תֵּבָה</text><text x="288" y="390" font-family="Liberation Serif, Times New Roman" font-size="40" font-style="italic" fill="#f3e6c8">Tebá</text></g>`;
   const k2 = easeOut((t - 1.2) / .8), k3 = easeOut((t - 2) / .8);
-  const sub = (y, c1, c2) => water(t, y, c1, c2, 3, 1).replace(/-400/g, '-200').replace(new RegExp(`width="${W + 800}"`), 'width="400"');
+  const sub = (y, c1, c2) => water(t, y, c1, c2, 3, 1).replace(/-1100/g, '-200').replace(new RegExp(`width="${W + 800}"`), 'width="400"');
   s += `<g opacity="${f1(k2)}" transform="translate(150,520)"><circle r="96" fill="#d7a84a"/><circle r="92" fill="#2c4b66"/><clipPath id="hc1"><circle r="88"/></clipPath><g clip-path="url(#hc1)">${sky('hcs1', [[0, '#4d5b70'], [1, '#8fa0b8']])}${ark(0, 22, .42, t, .5)}${sub(24, '#2c6b96', '#9fd0f0')}</g><text y="128" text-anchor="middle" font-family="Liberation Sans, Arial" font-weight="bold" font-size="22" fill="#fff" stroke="#000" stroke-width="4" paint-order="stroke">ARCA · Gn 6</text></g>`;
   s += `<g opacity="${f1(k3)}" transform="translate(426,520)"><circle r="96" fill="#d7a84a"/><circle r="92" fill="#2f6f74"/><clipPath id="hc2"><circle r="88"/></clipPath><g clip-path="url(#hc2)">${sky('hcs2', [[0, '#8fd0f5'], [1, '#fbe3b5']])}${reeds(t, -90, 90, 30, 12, 5, 80)}${sub(20, '#3a8a92', '#b9ecef')}${basket(0, 24, .9, t)}</g><text y="128" text-anchor="middle" font-family="Liberation Sans, Arial" font-weight="bold" font-size="22" fill="#fff" stroke="#000" stroke-width="4" paint-order="stroke">CESTO · Êx 2</text></g>`;
   if (k3 > 0) s += `<path d="M246 520 Q288 ${f1(480 - 10 * Math.sin(t * 2))} 330 520" stroke="#ffd84d" stroke-width="4" fill="none" stroke-dasharray="${f1(120 * k3)} 200"/>`;
@@ -208,7 +208,7 @@ S.nile = (t, p) => {
   s += glow(470, 160, 170, '#fff3c4', .8) + `<circle cx="470" cy="160" r="38" fill="${gRad('#ffd84d', .3)}"/>` + clouds(t, 80, 4, 8, '#fff', .8, 5);
   s += haze(520, '#fff4dc', .5) + pyramid(120, 520, .8) + pyramid(230, 525, .5, '#cfa75c');
   if (p.palace) s += `<g transform="translate(440,522)"><rect x="-90" y="-120" width="180" height="120" fill="${gLin('#e3d2b0', .1, -.2)}"/>${[-70, -35, 0, 35, 70].map(x => `<rect x="${x - 7}" y="-110" width="14" height="110" fill="${gLin('#c9b08a')}"/>`).join('')}<rect x="-100" y="-132" width="200" height="16" fill="#b39a74"/><rect x="-100" y="-132" width="200" height="4" fill="#2a6a9a"/><path d="M-14 -150 L0 -170 L14 -150Z" fill="#d7a84a"/></g>`;
-  s += `<path d="M-400 520 Q288 500 1000 520 L1000 600 L-400 600Z" fill="${gVert('#c9b07a')}"/>`;
+  s += `<path d="M-1100 520 Q288 500 1700 520 L1700 600 L-1100 600Z" fill="${gVert('#c9b07a')}"/>`;
   s += tree(40, 560, .8, t, 'palm', 1) + tree(545, 572, .7, t, 'palm', 2) + tree(300, 540, .45, t, 'palm', 3);
   s += water(t, 590, '#3a8a92', '#b9ecef', 5, .6);
   s += lotus(120, 690, 1, t) + lotus(470, 720, .9, t) + lotus(380, 660, .7, t);
@@ -282,7 +282,7 @@ S.crowdAlone = (t, p) => {
   s += mountains(470, '#b4bccb', 3, 90) + haze(470, '#fff', .4);
   s += [0, 1, 2, 3, 4, 5].map(i => house(-150 + i * 135, 742, 118, 210 + rnd(i) * 120, ['#d8c4a0', '#cdb48a', '#e0cfae'][i % 3], i)).join('');
   s += tree(30, 742, .7, t, 'palm', 1) + tree(545, 742, .6, t, 'palm', 2) + birds(t, 4, 7, 200, '#4a4a55');
-  s += `<rect x="-400" y="740" width="1400" height="700" fill="${gVert('#c2ae8c', .05, -.2)}"/>${[...Array(12)].map((_, i) => `<line x1="${-200 + i * 90}" y1="740" x2="${-260 + i * 110}" y2="1100" stroke="#a8946f" stroke-width="2"/>`).join('')}`;
+  s += `<rect x="-1100" y="740" width="2800" height="700" fill="${gVert('#c2ae8c', .05, -.2)}"/>${[...Array(12)].map((_, i) => `<line x1="${-200 + i * 90}" y1="740" x2="${-260 + i * 110}" y2="1100" stroke="#a8946f" stroke-width="2"/>`).join('')}`;
   s += stall(80, 760, '#b5523b', t) + stall(500, 765, '#3d6f8a', t);
   s += crowd(t, 800, 7, 2, 1, { x0: -200, gap: 110, walk: .9, speed: 40, look: 1, talk: 1, emo: 'neutral' });
   const lit = p.light ? easeOut(t / 1.5) : 0;
@@ -322,7 +322,7 @@ S.jordan = (t, p) => {
   s += hills(520, ['#b7c98a', '#9fb877', '#86a264'], 2, { bare: 1 });
   s += water(t, 700, '#4a9ec4', '#c9f0ff', 4, .6);
   s += reeds(t, -100, 120, 720, 14, 2, 110) + reeds(t, 470, 700, 720, 14, 6, 110);
-  s += `<path d="M-400 840 Q288 800 1000 840 L1000 1400 L-400 1400Z" fill="${gVert('#c9b07a')}"/>` + rocks(520, 880, .8) + rocks(40, 900, .7);
+  s += `<path d="M-1100 840 Q288 800 1700 840 L1700 2800 L-1100 2800Z" fill="${gVert('#c9b07a')}"/>` + rocks(520, 880, .8) + rocks(40, 900, .7);
   s += crowd(t, 690, 4, 4, .7, { x0: 330, gap: 60, look: -1, emo: 'awe' });
   s += person({ who: 'joao', x: 170, y: 900, s: 1.25, t, look: 1, pose: 'point', talk: !!p.talk && SPEAK, emo: p.talk ? 'joy' : 'awe' });
   s += person({ who: 'jesus', x: 420, y: 900, s: 1.25, t, look: -.5, walk: p.walk ? .5 : 0, emo: 'peace' });
@@ -335,7 +335,7 @@ S.cross = (t, p) => {
   const k = p.dawn ? easeOut(t / 4) : .5;
   s += glow(288, 560, 300 + k * 120, '#fff0b0', .6 + .3 * k) + rays(288, 560, 16, 800, '#fff3c4', .08 + .08 * k, t);
   s += clouds(t, 120, 5, 12, '#f7c9a8', .7, 4) + birds(t, 3, 2, 240, '#3a2a3a');
-  s += `<path d="M-400 700 Q288 520 1000 700 L1000 1400 L-400 1400Z" fill="${gVert('#6b4a3a', .1, -.3)}"/><path d="M-400 760 Q288 640 1000 760 L1000 1400 L-400 1400Z" fill="${gVert('#553828', .05, -.3)}"/>`;
+  s += `<path d="M-1100 700 Q288 520 1700 700 L1700 2800 L-1100 2800Z" fill="${gVert('#6b4a3a', .1, -.3)}"/><path d="M-1100 760 Q288 640 1700 760 L1700 2800 L-1100 2800Z" fill="${gVert('#553828', .05, -.3)}"/>`;
   s += crossHill(288, 640, 1.3) + rocks(150, 700, .9) + rocks(430, 720, .8) + grassTufts(t, 760, 30, 5, '#4a3a2a') + motes(t, 16, 4, '#fff3c4', 100, 480, 200, 700);
   if (p.icon) s += `<g transform="translate(430,500) scale(${f1(pop(t / .5) * 1.5)})"><circle r="34" fill="#fff" opacity=".9"/>${ICONS[p.icon]()}</g>`;
   return { svg: s, shots: [WIDE, { fx: 288, fy: 440, z: 1.5, sy: 400 }, { fx: 288, fy: 560, z: 1.2, sy: 480 }] };
