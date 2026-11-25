@@ -1163,12 +1163,18 @@ S.attributes = (t, p) => {
 };
 
 S.comment = (t, p) => {
+  // os 5 símbolos das descobertas + a pergunta (sem balão)
   let s = sky('cm', [[0, '#1a1530'], [1, '#3a2c55']]);
-  s += starsField(t, 80, 61, -300, 1300, .7) + motes(t, 20, 7, '#ffe7a0', 0, 576, 100, 900);
-  const k = pop(t / .6);
-  s += `<g transform="translate(288,330) scale(${f1(k)})"><path d="M-150 -70 Q-150 -100 -120 -100 L120 -100 Q150 -100 150 -70 L150 30 Q150 60 120 60 L-40 60 L-80 100 L-70 60 L-120 60 Q-150 60 -150 30Z" fill="${gVert('#fff8e6', .05, -.08)}" stroke="#d7a84a" stroke-width="4"/>${[0, 1, 2, 3, 4].map(i => { const kk = easeOut((t - .4 - i * .2) / .4); return `<g transform="translate(${-104 + i * 52},-20) scale(${f1(kk * .5)})">${ICONS[['star', 'steps', 'hebrew', 'eye', 'fur'][i]]()}</g>`; }).join('')}<text y="38" text-anchor="middle" font-family="Liberation Sans, Arial" font-weight="bold" font-size="24" fill="#5a2a0a">Qual você nunca percebeu?</text></g>`;
-  s += `<g transform="translate(288,520) scale(${f1(pop((t - 1) / .5) * 1.5)})">${ICONS.bell()}</g>`;
-  return { svg: s, shots: [WIDE, { fx: 288, fy: 400, z: 1.1, sy: 430 }] };
+  s += starsField(t, 80, 61, -300, 1300, .7) + motes(t, 20, 7, '#ffe7a0', 0, 576, 100, 900) + glow(288, 330, 260, '#ffe7a0', .3);
+  const items = [['star', 'Estrelas'], ['steps', 'Enoque'], ['hebrew', 'Tebá'], ['eye', 'El Roi'], ['fur', 'Cobertura']];
+  items.forEach(([ic, lb], i) => {
+    const k = pop((t - .15 * i) / .5); if (k <= 0) return;
+    const x = 288 + (i - 2) * 92, y = 300 + Math.sin(t * 1.6 + i) * 4;
+    s += `<g transform="translate(${x},${f1(y)}) scale(${f1(k * .62)})">${glow(0, 0, 80, '#ffe7a0', .3)}<circle r="58" fill="${gRad('#fff8e6')}"/><circle r="58" fill="none" stroke="#d7a84a" stroke-width="5"/><g transform="scale(1.25)">${ICONS[ic]().replace(/#ffd84d/g, ic === 'hebrew' ? '#8a1c2b' : '#e0a820')}</g><text y="92" text-anchor="middle" font-family="Liberation Sans, Arial" font-weight="bold" font-size="24" fill="#ffd84d">${lb}</text></g>`;
+  });
+  const kq = easeOut((t - .9) / .6);
+  const ov = `<g opacity="${f1(kq)}" text-anchor="middle" font-family="Cinzel, 'Liberation Serif', serif" font-weight="900" font-size="34" stroke="#1a0d00" stroke-width="7" stroke-linejoin="round" paint-order="stroke" fill="#fffaf0"><text x="288" y="${f1(430 + (1 - kq) * 10)}">Qual delas você</text><text x="288" y="${f1(472 + (1 - kq) * 10)}">nunca <tspan fill="#ffd84d">percebeu</tspan>?</text></g>`;
+  return { svg: s, ov, shots: [WIDE, { fx: 288, fy: 400, z: 1.06, sy: 420 }] };
 };
 
 // Fechamento padrão do canal: Bíblia aberta no centro, luz de dentro para fora, "Palavra Ensinada"

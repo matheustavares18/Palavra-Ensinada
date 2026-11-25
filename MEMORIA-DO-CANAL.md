@@ -86,3 +86,5 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
 - Mixagem: o `loudnorm` do ffmpeg (modo dinâmico) segura ~3 s no fim e cortava a última frase (fim do vídeo e a
   chamada "Vídeo completo no canal…" dos Shorts). `tools/mixar.sh` agora acrescenta silêncio antes e corta depois.
   Sempre conferir, no MP4 final, que há voz na última fala.
+- Convite para comentar no fechamento: **sem balão de fala**; só os 5 símbolos das descobertas (com o nome) e a
+  pergunta em destaque embaixo.
