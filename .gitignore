@@ -2,3 +2,4 @@ genesis-cinco-descobertas/video/
 __pycache__/
 genesis-cinco-descobertas/narracao/*.wav
 genesis-cinco-descobertas/narracao*/*.wav
+genesis-cinco-descobertas/web/
