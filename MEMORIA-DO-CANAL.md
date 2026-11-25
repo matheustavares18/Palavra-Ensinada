@@ -92,3 +92,10 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   no centro** (mesma altura), com o cenário continuando para os lados — nada pode ser cortado (correção do usuário:
   "pegue todos os detalhes da versão vertical"). Os fundos das cenas são desenhados largos (x de -1100 a 1700); legendas embaixo no centro, referência bíblica no canto superior esquerdo, frases de
   efeito no topo; o áudio é o mesmo do vídeo vertical final (já conferido).
+
+## Prompts para geradores de imagem (ChatGPT etc.)
+- **Sempre separado: um prompt = uma única imagem.** Nunca pedir "2 variações" no mesmo prompt (o ChatGPT junta
+  tudo numa imagem só, empilhada). Cada variação vai num prompt próprio, num bloco separado, e cada prompt diz
+  "gere UMA única imagem, sem colagem, sem dividir a tela".
+- Banner, foto de perfil, marca d'água e thumbnail: sempre em prompts separados.
+- Estilo: animação cartoon 2D com volume (2.5D), igual aos vídeos do canal.
