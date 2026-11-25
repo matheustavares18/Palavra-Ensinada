@@ -88,3 +88,7 @@ Regras registradas a partir das correções do usuário. Todo vídeo novo já na
   Sempre conferir, no MP4 final, que há voz na última fala.
 - Convite para comentar no fechamento: **sem balão de fala**; só os 5 símbolos das descobertas (com o nome) e a
   pergunta em destaque embaixo.
+- **Versão horizontal 16:9 (YouTube)**: mesmas cenas, enquadramento próprio (`?orient=h` na prévia; render com
+  `tools/hz.sh`). Câmera mostra uma faixa larga do mesmo cenário; cenas de texto (pergaminho, Tebá, resumo,
+  fechamento) com câmera fixa; legendas embaixo no centro, referência bíblica no canto superior esquerdo, frases de
+  efeito no topo; o áudio é o mesmo do vídeo vertical final (já conferido).

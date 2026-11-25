@@ -18,6 +18,8 @@ html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-a
 body.render .bar,body.render .note{display:none}
 body.render .wrap{padding:0}
 body.render #stage{width:576px;height:1024px;border-radius:0;box-shadow:none}
+body.h #stage{aspect-ratio:16/9;width:min(92vw,960px)}
+body.render.h #stage{width:1024px;height:576px}
 </style></head><body>
 <div class="wrap"><span style="font-family:Cinzel;font-weight:900;position:absolute;opacity:0;pointer-events:none">ÁÉ</span>
 <div id="stage"></div>
